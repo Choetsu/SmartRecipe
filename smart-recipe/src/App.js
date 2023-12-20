@@ -10,7 +10,7 @@ function App() {
   const handleSearch = async () => {
     setLoading(true);
 
-    const apiKey = //clé api openai;
+    const apiKey ="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";
 
     const openai = new OpenAI({
       apiKey: apiKey,
@@ -37,8 +37,8 @@ function App() {
       // Divisez la réponse en une liste d'éléments (supposez que la réponse est séparée par des sauts de ligne)
       const responseList = apiResponse.split("\n");
       // ne pas afficher les lignes vides
-      responseList.filter((item) => item !== "");
-      setResponse(responseList);
+      const filteredResponseList = responseList.filter((item) => item !== "");
+      setResponse(filteredResponseList);
     } catch (error) {
       console.error("Erreur lors de la requête à l'API OpenAI:", error);
       setResponse(["Erreur lors de la requête à l'API OpenAI"]);
