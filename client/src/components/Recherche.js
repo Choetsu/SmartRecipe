@@ -10,7 +10,7 @@ function Recherche() {
   const handleSearch = async () => {
     setLoading(true);
 
-    const apiKey ="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";
+    const apiKey = "";
 
     const openai = new OpenAI({
       apiKey: apiKey,
@@ -47,8 +47,12 @@ function Recherche() {
     }
   };
 
+  const Save = async () => {
+    console.log("Save");
+  }
+
   return (
-    <div className="App">
+    <div className="recherche">
       <h1>Moteur de Recherche de Recette</h1>
       <div className="search-container">
         <input
@@ -65,6 +69,10 @@ function Recherche() {
           <li key={index}>{item}</li>
         ))}
       </ul>
+      {/* input add to save */}
+      <div className="search-container">
+        <button onClick={Save}>Ajouter</button>
+      </div>
     </div>
   );
 }

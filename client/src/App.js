@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 
 import Recherche from "./components/Recherche";
 import Recette from "./components/Recette";
+import logo from "./assets/logo.png";
 
 
 function App() {
@@ -11,6 +12,9 @@ function App() {
       <div>
         <nav>
           <ul>
+            <li>
+                <img src={logo}  alt="logo" />
+            </li>
             <li>
               <Link to="/">Accueil</Link>
             </li>

@@ -1,6 +1,6 @@
-.App {
+.recherche {
   text-align: center;
-  font-family: Arial, sans-serif;
+  margin-top: 20px;
 }
 
 h1 {
@@ -15,46 +15,34 @@ input {
   width: 300px;
   padding: 10px;
   border: 1px solid #ccc;
+  border-radius: 5px;
 }
 
-button {
+.recherche button {
+  margin-left: 10px;
   padding: 10px 20px;
   background-color: #007BFF;
   color: #fff;
   border: none;
   cursor: pointer;
+  border-radius: 5px;
 }
 
-/* Ajoutez ces styles dans votre fichier CSS ou dans le composant React si vous utilisez des styles en ligne */
-
-/* Style de la liste non ordonnée */
-ul {
-  /* Supprime les puces */
+.recherche ul {
   list-style-type: none;
   margin: 0;
   padding: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
-
 }
 
-/* Style des éléments de la liste */
-li {
+.recherche li {
   width: 70%;
   font-size: 16px;
   margin: 10px 0;
   padding: 5px;
-  background-color: #f5f5f5;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
 }
 
-/* Lorsqu'un élément est survolé */
-li:hover {
-  background-color: #e0e0e0;
-  transition: background-color 0.3s;
-}
 
 
