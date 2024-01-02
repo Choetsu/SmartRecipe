@@ -2,10 +2,10 @@
     "name": "server",
     "version": "1.0.0",
     "description": "Server for the app Smart Recipes",
-    "main": "server.js",
+    "main": "app.js",
     "scripts": {
-        "start": "node server.js",
-        "dev": "node --watch server.js",
+        "start": "node app.js",
+        "dev": "node --watch app.js",
         "d:s:u": "node migrate.js"
     },
     "dependencies": {
