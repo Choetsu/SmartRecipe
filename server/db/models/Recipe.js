@@ -72,11 +72,8 @@ module.exports = (connection) => {
             },
             preparation_time: {
                 type: DataTypes.INTEGER,
-                allowNull: false,
+                allowNull: true,
                 validate: {
-                    notNull: {
-                        msg: "Le temps de préparation est obligatoire",
-                    },
                     min: {
                         args: [1],
                         msg: "Le temps de préparation doit être supérieur à 0",
@@ -89,11 +86,8 @@ module.exports = (connection) => {
             },
             cooking_time: {
                 type: DataTypes.INTEGER,
-                allowNull: false,
+                allowNull: true,
                 validate: {
-                    notNull: {
-                        msg: "Le temps de cuisson est obligatoire",
-                    },
                     min: {
                         args: [1],
                         msg: "Le temps de cuisson doit être supérieur à 0",
@@ -119,11 +113,8 @@ module.exports = (connection) => {
             },
             difficulty: {
                 type: DataTypes.STRING,
-                allowNull: false,
+                allowNull: true,
                 validate: {
-                    notNull: {
-                        msg: "La difficulté est obligatoire",
-                    },
                     len: {
                         args: [2, 100],
                         msg: "La difficulté doit contenir entre 2 et 100 caractères",
@@ -132,11 +123,8 @@ module.exports = (connection) => {
             },
             image_url: {
                 type: DataTypes.STRING,
-                allowNull: false,
+                allowNull: true,
                 validate: {
-                    notNull: {
-                        msg: "L'image est obligatoire",
-                    },
                     isUrl: {
                         args: true,
                         msg: "L'image doit être une URL valide",
@@ -147,7 +135,6 @@ module.exports = (connection) => {
         {
             sequelize: connection,
             tableName: "recipe",
-            underscored: true,
         }
     );
 

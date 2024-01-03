@@ -1,4 +1,4 @@
-const { User } = require("../db/models");
+const { User, Recipe } = require("../db/models");
 const Sequelize = require("sequelize");
 const ValidationError = require("../errors/ValidationError");
 const UnauthorizedError = require("../errors/UnauthorizedError");
@@ -9,6 +9,15 @@ module.exports = function UserService() {
         findAll: async function (filters, options) {
             let dbOptions = {
                 where: filters,
+                include: [
+                    {
+                        model: Recipe,
+                        as: "favoriteRecipes",
+                        through: {
+                            attributes: [],
+                        },
+                    },
+                ],
             };
             if (options.order) {
                 dbOptions.order = Object.entries(options.order);
@@ -93,6 +102,16 @@ module.exports = function UserService() {
                 where: filters,
             };
             return User.count(dbOptions);
+        },
+        addFavoriteRecipe: async function (userId, recipeId) {
+            const user = await this.findOne({ id: userId });
+            if (!user) throw new Error("Utilisateur non trouvé");
+            await user.addFavoriteRecipe(recipeId);
+        },
+        removeFavoriteRecipe: async function (userId, recipeId) {
+            const user = await this.findOne({ id: userId });
+            if (!user) throw new Error("Utilisateur non trouvé");
+            await user.removeFavoriteRecipe(recipeId);
         },
     };
 };

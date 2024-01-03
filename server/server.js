@@ -1,7 +1,8 @@
 const express = require("express");
 const cors = require("cors");
 
-const SecurityRouter = require("./routes/security");
+const UserRouter = require("./routes/user");
+const RecipeRouter = require("./routes/recipe");
 
 const app = express();
 
@@ -14,7 +15,8 @@ app.use(
 );
 app.use(express.json());
 
-app.use("/users", SecurityRouter);
+app.use("/users", UserRouter);
+app.use("/recipes", RecipeRouter);
 
 app.get("/", (req, res) => {
     res.send("Hello World");

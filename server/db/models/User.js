@@ -93,5 +93,35 @@ module.exports = (connection) => {
         return updatePassword(user);
     });
 
+    // Méthode pour ajouter une recette aux favoris
+    User.prototype.addFavoriteRecipe = async function (recipeId) {
+        try {
+            const recipe = await this.sequelize.models.Recipe.findByPk(
+                recipeId
+            );
+            if (!recipe) {
+                throw new Error("Recette non trouvée");
+            }
+            await this.addRecipe(recipe);
+        } catch (error) {
+            throw error;
+        }
+    };
+
+    // Méthode pour retirer une recette des favoris
+    User.prototype.removeFavoriteRecipe = async function (recipeId) {
+        try {
+            const recipe = await this.sequelize.models.Recipe.findByPk(
+                recipeId
+            );
+            if (!recipe) {
+                throw new Error("Recette non trouvée");
+            }
+            await this.removeRecipe(recipe);
+        } catch (error) {
+            throw error;
+        }
+    };
+
     return User;
 };
