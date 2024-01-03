@@ -39,6 +39,12 @@ module.exports = new genericRouter(
                 path: "/remove-favorite-recipe/:recipeId",
                 middleware: [],
             },
+            {
+                handler: "getFavoriteRecipes",
+                method: "get",
+                path: "/favorite-recipes/:userId",
+                middleware: [],
+            },
         ],
         defaultRoutes: false,
         middlewares: [],

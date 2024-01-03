@@ -66,5 +66,21 @@ module.exports = function UserController(UserService) {
                 }
             }
         },
+        getFavoriteRecipes: async (req, res, next) => {
+            try {
+                const userId = req.params.userId;
+                const favoriteRecipes = await UserService.getFavoriteRecipes(
+                    userId
+                );
+                return res.status(201).json(favoriteRecipes);
+            } catch (error) {
+                if (error.constructor.name === "ValidationError") {
+                    res.status(422).json(error.errors);
+                } else {
+                    console.error(error);
+                    next(error);
+                }
+            }
+        },
     };
 };

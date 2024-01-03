@@ -113,5 +113,10 @@ module.exports = function UserService() {
             if (!user) throw new Error("Utilisateur non trouvé");
             await user.removeFavoriteRecipe(recipeId);
         },
+        getFavoriteRecipes: async function (userId) {
+            const user = await this.findOne({ id: userId });
+            if (!user) throw new Error("Utilisateur non trouvé");
+            return user.getFavoriteRecipes();
+        },
     };
 };

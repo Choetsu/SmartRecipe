@@ -16,7 +16,20 @@ module.exports = new genericRouter(
                 middleware: [],
             },
         ],
-        defaultRoutes: false,
+        defaultRoutes: {
+            getOne: {
+                method: "get",
+                path: "/:id",
+                middleware: [],
+                active: true,
+            },
+            getAll: {
+                method: "get",
+                path: "/",
+                middleware: [],
+                active: true,
+            },
+        },
         middlewares: [],
     }
 );

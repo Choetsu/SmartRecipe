@@ -123,5 +123,17 @@ module.exports = (connection) => {
         }
     };
 
+    // Méthode pour récupérer les recettes favorites
+    User.prototype.getFavoriteRecipes = async function () {
+        try {
+            const user = await this.sequelize.models.User.findByPk(this.id, {
+                include: ["recipes"],
+            });
+            return user.recipes;
+        } catch (error) {
+            throw error;
+        }
+    };
+
     return User;
 };
