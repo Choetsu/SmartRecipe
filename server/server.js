@@ -37,7 +37,10 @@ app.post("/recipe-search", async (req, res) => {
                 {
                     role: "system",
                     content:
-                        "Tu es un moteur de recherche pour les recettes de cuisine, tu dois afficher les recettes qui correspondent à la recherche de l'utilisateur. Il faut que tu donnes les ingrédients et les étapes de la recette.",
+                        "Tu es un moteur de recherche pour les recettes de cuisine, tu dois afficher les recettes qui correspondent à la recherche de l'utilisateur." +
+                        " Il faut que tu donnes les ingrédients et les étapes de la recette." +
+                        " Tu dois donner la réponse sous la forme suivante : " +
+                        " Nom de la recette : , Description de la recette : , Ingrédients : , Étapes de la recette : , Temps de préparation : , Temps de cuisson : , Catégorie : . Ces informations sont obligatoires et doivent suivre le format.",
                 },
                 {
                     role: "user",

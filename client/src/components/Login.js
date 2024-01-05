@@ -1,45 +1,36 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "../style/Login.css";
 
-function Login(){
+function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
 
-    useEffect(() => {
-        const savedEmail = "";
-        const savedPassword = "";
-
-        setEmail(savedEmail);
-        setPassword(savedPassword);
-    }, []);
-
-    const login = async () => {
+    const login = async (e) => {
+        e.preventDefault(); // Empêche le rechargement de la page
         setLoading(true);
 
-        // try {
-        //     const response = await fetch("http://localhost:5000/login", {
-        //         method: "POST",
-        //         headers: {
-        //             "Content-Type": "application/json",
-        //         },
-        //         body: JSON.stringify({ email, password }),
-        //     });
+        try {
+            const response = await fetch("http://localhost:3000/users/login", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ email, password }),
+            });
 
-        //     const data = await response.json();
+            const data = await response.json();
 
-        //     if (data.status === "ok") {
-        //         console.log("Connecté");
-        //     } else {
-        //         console.log("Erreur");
-        //     }
-        // } catch (error) {
-        //     console.error("Erreur lors de la connexion:", error);
-        // } finally {
-        //     setLoading(false);
-        // }
-    }
-    
+            if (response.status === 200) {
+                localStorage.setItem("userId", data.id);
+                window.location = "/";
+            }
+        } catch (error) {
+            console.error("Erreur lors de la connexion:", error);
+        } finally {
+            setLoading(false);
+        }
+    };
     return (
         <div className="Login">
             <h1>Connexion</h1>
@@ -60,7 +51,7 @@ function Login(){
                     onChange={(event) => setPassword(event.target.value)}
                 />
 
-                <button type="button">
+                <button type="submit" disabled={loading}>
                     {loading ? "Connexion..." : "Se connecter"}
                 </button>
             </form>
