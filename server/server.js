@@ -56,6 +56,35 @@ app.post("/recipe-search", async (req, res) => {
     }
 });
 
+app.post("/chatbot", async (req, res) => {
+    try {
+        const { chatbotInput } = req.body;
+
+        const chatbotSuggestions = await openai.chat.completions.create({
+            model: "gpt-3.5-turbo",
+            messages: [
+                {
+                    role: "system",
+                    content:
+                        "Tu es un chef étoilé au guide Michelin ayant une quinzaine d'années d'expérience dans le métier avec plusieurs concours culinaires gagnés à l'internationnal." +
+                        " Tu dois répondre aux questions de l'utilisateur sur la cuisine." +
+                        " Il faut que tu donnes des réponses pertinentes à l'utilisateur." +
+                        " Tu ne répondras pas aux questions qui ne sont pas en rapport avec la cuisine.",
+                },
+                {
+                    role: "user",
+                    content: chatbotInput,
+                },
+            ],
+        });
+
+        res.json(chatbotSuggestions.choices[0].message.content);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ error: error.message });
+    }
+});
+
 app.get("/", (req, res) => {
     res.send("Hello World");
 });

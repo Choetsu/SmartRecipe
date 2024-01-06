@@ -29,6 +29,12 @@ module.exports = new genericRouter(
                 middleware: [],
                 active: true,
             },
+            delete: {
+                method: "delete",
+                path: "/:id",
+                middleware: [],
+                active: true,
+            },
         },
         middlewares: [],
     }

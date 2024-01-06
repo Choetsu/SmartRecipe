@@ -56,7 +56,7 @@ module.exports = function UserController(UserService) {
                     userId,
                     recipeId
                 );
-                return res.status(201).json(favoriteRecipe);
+                return res.status(204).json(favoriteRecipe);
             } catch (error) {
                 if (error.constructor.name === "ValidationError") {
                     res.status(422).json(error.errors);
