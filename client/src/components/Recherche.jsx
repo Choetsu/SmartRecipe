@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import axios from "axios";
 import Chatbot from "./Chatbot";
 import { useNavigate } from "react-router-dom";
@@ -122,7 +122,7 @@ function Recherche() {
 
     const Save = async () => {
         try {
-            const saveResponse = await axios.post(
+            await axios.post(
                 "http://localhost:3000/recipes/add-recipe",
                 recipeData
             );

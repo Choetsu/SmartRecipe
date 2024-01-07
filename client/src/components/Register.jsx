@@ -1,13 +1,13 @@
-import React from "react";
+import { useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
 function Register() {
-    const [email, setEmail] = React.useState("");
-    const [password, setPassword] = React.useState("");
-    const [firstname, setFirstname] = React.useState("");
-    const [lastname, setLastname] = React.useState("");
-    const [loading, setLoading] = React.useState(false);
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [firstname, setFirstname] = useState("");
+    const [lastname, setLastname] = useState("");
+    const [loading, setLoading] = useState(false);
 
     const register = async (e) => {
         e.preventDefault();

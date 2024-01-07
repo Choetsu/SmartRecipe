@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import springImage from "../assets/images/spring.jpg";
 import summerImage from "../assets/images/summer.jpg";

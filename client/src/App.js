@@ -31,10 +31,12 @@ function App() {
                             <Link to="/">Accueil</Link>
                         </li>
                         <li>
-                            <Link to="/recette">Recettes</Link>
+                            <Link to="/recettes">Recettes</Link>
                         </li>
                         <li>
-                            <Link to="/seasons">Recettes saisonnières</Link>
+                            <Link to="/recettes-saisonnieres">
+                                Recettes saisonnières
+                            </Link>
                         </li>
                         <li>
                             {isLoggedIn ? (
@@ -69,19 +71,22 @@ function App() {
 
                 <Routes>
                     <Route path="/" element={<Recherche />} />
-                    <Route path="/recette" element={<Recette />} />
+                    <Route path="/recettes" element={<Recette />} />
                     <Route
                         path="/login"
                         element={<Login setIsLoggedIn={setIsLoggedIn} />}
                     />
                     <Route
-                        path="/recipe-details/:id"
+                        path="/recettes-details/:id"
                         element={
                             <RecetteDetails setIsLoggedIn={setIsLoggedIn} />
                         }
                     />
                     <Route path="/favoris" element={<Favoris />} />
-                    <Route path="/seasons" element={<Seasons />} />
+                    <Route
+                        path="/recettes-saisonnieres"
+                        element={<Seasons />}
+                    />
                     <Route path="/register" element={<Register />} />
                 </Routes>
             </div>

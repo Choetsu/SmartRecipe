@@ -1,47 +1,45 @@
-import React from "react";
+import { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
-import { StarIcon } from "@heroicons/react/24/solid";
 import { StarIcon as StarIconFilled } from "@heroicons/react/24/solid";
+import { StarIcon as StarIconOutline } from "@heroicons/react/24/outline";
 import { ClipboardDocumentIcon, ShareIcon } from "@heroicons/react/24/solid";
 
 function RecetteDetails() {
-    const [recipe, setRecipe] = React.useState([]);
-    const [isLoading, setIsLoading] = React.useState(true);
+    const [recipe, setRecipe] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
 
-    const recipeId = useParams().id;
-    const userId = localStorage.getItem("userId");
+    const recipeId = useParams().id || null;
+    const userId = localStorage.getItem("userId") || null;
 
-    const [isFavorite, setIsFavorite] = React.useState(false);
+    const [isFavorite, setIsFavorite] = useState(false);
 
-    const [rating, setRating] = React.useState(0);
-    const [comment, setComment] = React.useState("");
-    const [commentList, setCommentList] = React.useState([]);
+    const [rating, setRating] = useState(0);
+    const [comment, setComment] = useState("");
+    const [commentList, setCommentList] = useState([]);
 
-    const [recommendedRecipes, setRecommendedRecipes] = React.useState([]);
-    const [isLoadingRecommend, setIsLoadingRecommend] = React.useState(false);
-    const [showModal, setShowModal] = React.useState(false);
+    const [recommendedRecipes, setRecommendedRecipes] = useState([]);
+    const [isLoadingRecommend, setIsLoadingRecommend] = useState(false);
+    const [showModal, setShowModal] = useState(false);
 
     const [recommendedAccompagnements, setRecommendedAccompagnements] =
-        React.useState([]);
+        useState([]);
     const [isLoadingAccompagnements, setIsLoadingAccompagnements] =
-        React.useState(false);
+        useState(false);
     const [showModalAccompagnements, setShowModalAccompagnements] =
-        React.useState(false);
+        useState(false);
 
-    const [groceryList, setGroceryList] = React.useState([]);
-    const [isLoadingGroceryList, setIsLoadingGroceryList] =
-        React.useState(false);
-    const [showModalGroceryList, setShowModalGroceryList] =
-        React.useState(false);
+    const [groceryList, setGroceryList] = useState([]);
+    const [isLoadingGroceryList, setIsLoadingGroceryList] = useState(false);
+    const [showModalGroceryList, setShowModalGroceryList] = useState(false);
 
-    const [caloricIndications, setCaloricIndications] = React.useState([]);
+    const [caloricIndications, setCaloricIndications] = useState([]);
     const [isLoadingCaloricIndications, setIsLoadingCaloricIndications] =
-        React.useState(false);
+        useState(false);
     const [showModalCaloricIndications, setShowModalCaloricIndications] =
-        React.useState(false);
+        useState(false);
 
-    const checkIfFavorite = async () => {
+    const checkIfFavorite = useCallback(async () => {
         try {
             if (userId === null) {
                 return;
@@ -54,13 +52,18 @@ function RecetteDetails() {
             favoriteRecipes.forEach((favoriteRecipe) => {
                 if (favoriteRecipe.id === recipeId) {
                     setIsFavorite(true);
+                    localStorage.setItem(`favorite_${recipeId}`, "true");
+                } else {
+                    setIsFavorite(false);
+                    localStorage.removeItem(`favorite_${recipeId}`);
                 }
             });
         } catch (error) {
             console.error("Erreur lors de la vérification des favoris:", error);
         }
-    };
-    const fetchComments = async () => {
+    }, [userId, recipeId]);
+
+    const fetchComments = useCallback(async () => {
         try {
             const commentsResponse = await axios.get(
                 `http://localhost:3000/recipe-ratings/comments/${recipeId}`
@@ -69,11 +72,18 @@ function RecetteDetails() {
         } catch (error) {
             console.error(error);
         }
-    };
+    }, [recipeId]);
 
-    React.useEffect(() => {
+    useEffect(() => {
+        const isFavorite =
+            localStorage.getItem(`favorite_${recipeId}`) === "true";
+        setIsFavorite(isFavorite);
+
         const fetchRecipeData = async () => {
             try {
+                if (recipeId === null) {
+                    return;
+                }
                 const recipeResponse = await axios.get(
                     `http://localhost:3000/recipes/${recipeId}`
                 );
@@ -90,7 +100,11 @@ function RecetteDetails() {
         fetchRecipeData();
         fetchComments();
         setIsLoading(false);
-    }, [recipeId, userId]);
+    }, [recipeId, userId, checkIfFavorite, fetchComments]);
+
+    useEffect(() => {
+        checkIfFavorite();
+    }, [checkIfFavorite]);
 
     const addToFavorites = async () => {
         try {
@@ -102,6 +116,7 @@ function RecetteDetails() {
                 }
             );
             setIsFavorite(true);
+            localStorage.setItem(`favorite_${recipeId}`, "true");
         } catch (error) {
             console.error(error);
         }
@@ -117,6 +132,7 @@ function RecetteDetails() {
                 },
             });
             setIsFavorite(false);
+            localStorage.removeItem(`favorite_${recipeId}`);
         } catch (error) {
             console.error(error);
         }
@@ -304,7 +320,7 @@ function RecetteDetails() {
                             {isFavorite ? (
                                 <StarIconFilled className="h-6 w-6 text-white" />
                             ) : (
-                                <StarIcon className="h-6 w-6 text-white" />
+                                <StarIconOutline className="h-6 w-6 text-white" />
                             )}
                         </button>
 
