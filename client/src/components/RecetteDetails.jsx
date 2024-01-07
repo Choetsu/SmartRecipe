@@ -38,6 +38,7 @@ function RecetteDetails() {
         useState(false);
     const [showModalCaloricIndications, setShowModalCaloricIndications] =
         useState(false);
+    const apiUrl = process.env.REACT_APP_API_URL;
 
     const checkIfFavorite = useCallback(async () => {
         try {
@@ -45,7 +46,7 @@ function RecetteDetails() {
                 return;
             }
             const favoriteResponse = await axios.get(
-                `http://localhost:4000/users/favorite-recipes/${userId}`
+                `${apiUrl}/users/favorite-recipes/${userId}`
             );
             const favoriteRecipes = favoriteResponse.data;
 
@@ -66,7 +67,7 @@ function RecetteDetails() {
     const fetchComments = useCallback(async () => {
         try {
             const commentsResponse = await axios.get(
-                `http://localhost:4000/recipe-ratings/comments/${recipeId}`
+                `${apiUrl}/recipe-ratings/comments/${recipeId}`
             );
             setCommentList(commentsResponse.data);
         } catch (error) {
@@ -85,7 +86,7 @@ function RecetteDetails() {
                     return;
                 }
                 const recipeResponse = await axios.get(
-                    `http://localhost:4000/recipes/${recipeId}`
+                    `${apiUrl}/recipes/${recipeId}`
                 );
                 setRecipe(recipeResponse.data);
             } catch (error) {
@@ -108,13 +109,10 @@ function RecetteDetails() {
 
     const addToFavorites = async () => {
         try {
-            await axios.post(
-                `http://localhost:4000/users/add-favorite-recipe`,
-                {
-                    recipeId: recipeId,
-                    userId: userId,
-                }
-            );
+            await axios.post(`${apiUrl}/users/add-favorite-recipe`, {
+                recipeId: recipeId,
+                userId: userId,
+            });
             setIsFavorite(true);
             localStorage.setItem(`favorite_${recipeId}`, "true");
         } catch (error) {
@@ -126,7 +124,7 @@ function RecetteDetails() {
         try {
             await axios({
                 method: "delete",
-                url: `http://localhost:4000/users/remove-favorite-recipe/${recipeId}`,
+                url: `${apiUrl}/users/remove-favorite-recipe/${recipeId}`,
                 data: {
                     userId: userId,
                 },
@@ -157,15 +155,12 @@ function RecetteDetails() {
     const handleRatingSubmit = async () => {
         if (userId !== null) {
             try {
-                await axios.post(
-                    `http://localhost:4000/recipe-ratings/add-recipe-rating`,
-                    {
-                        rating: rating,
-                        comment: comment,
-                        user_id: userId,
-                        recipe_id: recipeId,
-                    }
-                );
+                await axios.post(`${apiUrl}/recipe-ratings/add-recipe-rating`, {
+                    rating: rating,
+                    comment: comment,
+                    user_id: userId,
+                    recipe_id: recipeId,
+                });
                 setRating(0);
                 setComment("");
                 fetchComments();
@@ -179,12 +174,9 @@ function RecetteDetails() {
     const fetchRecommendedRecipes = async () => {
         setIsLoadingRecommend(true);
         try {
-            const response = await axios.post(
-                `http://localhost:4000/recommendations`,
-                {
-                    recommendationsInput: recipe.name,
-                }
-            );
+            const response = await axios.post(`${apiUrl}/recommendations`, {
+                recommendationsInput: recipe.name,
+            });
             setRecommendedRecipes(response.data);
             setShowModal(true);
         } catch (error) {
@@ -196,12 +188,9 @@ function RecetteDetails() {
     const fetchAccompagnements = async () => {
         setIsLoadingAccompagnements(true);
         try {
-            const response = await axios.post(
-                `http://localhost:4000/accompaniment`,
-                {
-                    accompanimentInput: recipe.name,
-                }
-            );
+            const response = await axios.post(`${apiUrl}/accompaniment`, {
+                accompanimentInput: recipe.name,
+            });
             setRecommendedAccompagnements(response.data);
             setShowModalAccompagnements(true);
         } catch (error) {
@@ -213,12 +202,9 @@ function RecetteDetails() {
     const fetchGroceryList = async () => {
         setIsLoadingGroceryList(true);
         try {
-            const response = await axios.post(
-                `http://localhost:4000/grocery-list`,
-                {
-                    groceryListInput: recipe.name,
-                }
-            );
+            const response = await axios.post(`${apiUrl}/grocery-list`, {
+                groceryListInput: recipe.name,
+            });
             setGroceryList(response.data);
             setShowModalGroceryList(true);
         } catch (error) {
@@ -230,12 +216,9 @@ function RecetteDetails() {
     const fetchIndicatorsCalories = async () => {
         setIsLoadingCaloricIndications(true);
         try {
-            const response = await axios.post(
-                `http://localhost:4000/caloric-indications`,
-                {
-                    caloricIndicationsInput: recipe.name,
-                }
-            );
+            const response = await axios.post(`${apiUrl}/caloric-indications`, {
+                caloricIndicationsInput: recipe.name,
+            });
             setCaloricIndications(response.data);
             setShowModalCaloricIndications(true);
         } catch (error) {

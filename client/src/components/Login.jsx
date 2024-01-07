@@ -5,19 +5,17 @@ function Login({ setIsLoggedIn }) {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
+    const apiUrl = process.env.REACT_APP_API_URL;
 
     const login = async (e) => {
         e.preventDefault();
         setLoading(true);
 
         try {
-            const response = await axios.post(
-                `http://localhost:4000/users/login`,
-                {
-                    email,
-                    password,
-                }
-            );
+            const response = await axios.post(`${apiUrl}/users/login`, {
+                email,
+                password,
+            });
 
             if (response.status === 200) {
                 const data = response.data;

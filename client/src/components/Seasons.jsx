@@ -9,6 +9,7 @@ function Seasons() {
     const [selectedSeason, setSelectedSeason] = useState(null);
     const [recommendations, setRecommendations] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
+    const apiUrl = process.env.REACT_APP_API_URL;
 
     const seasons = [
         { name: "Printemps", image: springImage },
@@ -22,10 +23,9 @@ function Seasons() {
             setIsLoading(true);
             const fetchSeasons = async () => {
                 try {
-                    const response = await axios.post(
-                        `http://localhost:4000/seasons`,
-                        { seasonsInput: selectedSeason }
-                    );
+                    const response = await axios.post(`${apiUrl}/seasons`, {
+                        seasonsInput: selectedSeason,
+                    });
                     setRecommendations(response.data);
                 } catch (error) {
                     console.error(error);

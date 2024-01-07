@@ -8,21 +8,19 @@ function Register() {
     const [firstname, setFirstname] = useState("");
     const [lastname, setLastname] = useState("");
     const [loading, setLoading] = useState(false);
+    const apiUrl = process.env.REACT_APP_API_URL;
 
     const register = async (e) => {
         e.preventDefault();
         setLoading(true);
 
         try {
-            const response = await axios.post(
-                `http://localhost:4000/users/register`,
-                {
-                    email,
-                    password,
-                    firstname,
-                    lastname,
-                }
-            );
+            const response = await axios.post(`${apiUrl}/users/register`, {
+                email,
+                password,
+                firstname,
+                lastname,
+            });
 
             if (response.status === 201) {
                 const data = response.data;

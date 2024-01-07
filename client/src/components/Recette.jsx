@@ -4,10 +4,11 @@ import { Link } from "react-router-dom";
 
 function Recette() {
     const [recipes, setRecipes] = useState([]);
+    const apiUrl = process.env.REACT_APP_API_URL;
 
     useEffect(() => {
         const fetchRecipes = async () => {
-            const response = await axios.get("http://localhost:4000/recipes");
+            const response = await axios.get(`${apiUrl}/recipes`);
 
             setRecipes(response.data);
         };

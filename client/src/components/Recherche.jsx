@@ -8,6 +8,7 @@ function Recherche() {
     const [destinationInput, setDestinationInput] = useState("");
     const [loading, setLoading] = useState(false);
     const [response, setResponse] = useState([]);
+    const apiUrl = process.env.REACT_APP_API_URL;
 
     const [recipeData, setRecipeData] = useState({
         name: "",
@@ -33,10 +34,9 @@ function Recherche() {
 
         setLoading(true);
         try {
-            const searchResponse = await axios.post(
-                "http://localhost:4000/recipe-search",
-                { recipeInput: destinationInput }
-            );
+            const searchResponse = await axios.post(`${apiUrl}/recipe-search`, {
+                recipeInput: destinationInput,
+            });
 
             const responseList = searchResponse.data.split("\n");
 
@@ -122,10 +122,7 @@ function Recherche() {
 
     const Save = async () => {
         try {
-            await axios.post(
-                "http://localhost:4000/recipes/add-recipe",
-                recipeData
-            );
+            await axios.post(`${apiUrl}/recipes/add-recipe`, recipeData);
 
             navigate("/recette");
         } catch (error) {

@@ -7,12 +7,13 @@ function Favoris() {
     const [isLoading, setIsLoading] = useState(true);
 
     const userId = localStorage.getItem("userId");
+    const apiUrl = process.env.REACT_APP_API_URL;
 
     useEffect(() => {
         const fetchFavoris = async () => {
             try {
                 const response = await axios.get(
-                    `http://localhost:4000/users/favorite-recipes/${userId}`
+                    `${apiUrl}/users/favorite-recipes/${userId}`
                 );
                 setFavoris(response.data);
             } catch (error) {

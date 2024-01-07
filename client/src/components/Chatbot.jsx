@@ -14,6 +14,8 @@ function Chatbot() {
     const [isChatboxOpen, setIsChatboxOpen] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
 
+    const apiUrl = process.env.REACT_APP_API_URL;
+
     const toggleChatbox = () => {
         setIsChatboxOpen(!isChatboxOpen);
     };
@@ -22,12 +24,9 @@ function Chatbot() {
         if (input.trim() !== "") {
             setIsLoading(true);
             try {
-                const response = await axios.post(
-                    `http://localhost:4000/chatbot`,
-                    {
-                        chatbotInput: input,
-                    }
-                );
+                const response = await axios.post(`${apiUrl}/chatbot`, {
+                    chatbotInput: input,
+                });
                 console.log(response.data);
                 setResponses([
                     ...responses,
