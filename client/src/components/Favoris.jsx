@@ -12,7 +12,7 @@ function Favoris() {
         const fetchFavoris = async () => {
             try {
                 const response = await axios.get(
-                    `http://localhost:3000/users/favorite-recipes/${userId}`
+                    `http://localhost:4000/users/favorite-recipes/${userId}`
                 );
                 setFavoris(response.data);
             } catch (error) {

@@ -23,7 +23,7 @@ function Chatbot() {
             setIsLoading(true);
             try {
                 const response = await axios.post(
-                    `http://localhost:3000/chatbot`,
+                    `http://localhost:4000/chatbot`,
                     {
                         chatbotInput: input,
                     }

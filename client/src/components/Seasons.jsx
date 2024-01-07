@@ -23,7 +23,7 @@ function Seasons() {
             const fetchSeasons = async () => {
                 try {
                     const response = await axios.post(
-                        `http://localhost:3000/seasons`,
+                        `http://localhost:4000/seasons`,
                         { seasonsInput: selectedSeason }
                     );
                     setRecommendations(response.data);

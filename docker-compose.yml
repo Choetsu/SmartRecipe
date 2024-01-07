@@ -9,7 +9,7 @@ services:
             JWT_SECRET: ${JWT_SECRET:-secret}
         working_dir: /usr/local/app
         ports:
-            - 127.0.0.1:3000:3000
+            - 127.0.0.1:4000:4000
         command: npm run dev
         env_file:
             - web-variables.env

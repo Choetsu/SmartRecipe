@@ -45,7 +45,7 @@ function RecetteDetails() {
                 return;
             }
             const favoriteResponse = await axios.get(
-                `http://localhost:3000/users/favorite-recipes/${userId}`
+                `http://localhost:4000/users/favorite-recipes/${userId}`
             );
             const favoriteRecipes = favoriteResponse.data;
 
@@ -66,7 +66,7 @@ function RecetteDetails() {
     const fetchComments = useCallback(async () => {
         try {
             const commentsResponse = await axios.get(
-                `http://localhost:3000/recipe-ratings/comments/${recipeId}`
+                `http://localhost:4000/recipe-ratings/comments/${recipeId}`
             );
             setCommentList(commentsResponse.data);
         } catch (error) {
@@ -85,7 +85,7 @@ function RecetteDetails() {
                     return;
                 }
                 const recipeResponse = await axios.get(
-                    `http://localhost:3000/recipes/${recipeId}`
+                    `http://localhost:4000/recipes/${recipeId}`
                 );
                 setRecipe(recipeResponse.data);
             } catch (error) {
@@ -109,7 +109,7 @@ function RecetteDetails() {
     const addToFavorites = async () => {
         try {
             await axios.post(
-                `http://localhost:3000/users/add-favorite-recipe`,
+                `http://localhost:4000/users/add-favorite-recipe`,
                 {
                     recipeId: recipeId,
                     userId: userId,
@@ -126,7 +126,7 @@ function RecetteDetails() {
         try {
             await axios({
                 method: "delete",
-                url: `http://localhost:3000/users/remove-favorite-recipe/${recipeId}`,
+                url: `http://localhost:4000/users/remove-favorite-recipe/${recipeId}`,
                 data: {
                     userId: userId,
                 },
@@ -158,7 +158,7 @@ function RecetteDetails() {
         if (userId !== null) {
             try {
                 await axios.post(
-                    `http://localhost:3000/recipe-ratings/add-recipe-rating`,
+                    `http://localhost:4000/recipe-ratings/add-recipe-rating`,
                     {
                         rating: rating,
                         comment: comment,
@@ -180,7 +180,7 @@ function RecetteDetails() {
         setIsLoadingRecommend(true);
         try {
             const response = await axios.post(
-                `http://localhost:3000/recommendations`,
+                `http://localhost:4000/recommendations`,
                 {
                     recommendationsInput: recipe.name,
                 }
@@ -197,7 +197,7 @@ function RecetteDetails() {
         setIsLoadingAccompagnements(true);
         try {
             const response = await axios.post(
-                `http://localhost:3000/accompaniment`,
+                `http://localhost:4000/accompaniment`,
                 {
                     accompanimentInput: recipe.name,
                 }
@@ -214,7 +214,7 @@ function RecetteDetails() {
         setIsLoadingGroceryList(true);
         try {
             const response = await axios.post(
-                `http://localhost:3000/grocery-list`,
+                `http://localhost:4000/grocery-list`,
                 {
                     groceryListInput: recipe.name,
                 }
@@ -231,7 +231,7 @@ function RecetteDetails() {
         setIsLoadingCaloricIndications(true);
         try {
             const response = await axios.post(
-                `http://localhost:3000/caloric-indications`,
+                `http://localhost:4000/caloric-indications`,
                 {
                     caloricIndicationsInput: recipe.name,
                 }

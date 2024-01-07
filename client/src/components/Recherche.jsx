@@ -34,7 +34,7 @@ function Recherche() {
         setLoading(true);
         try {
             const searchResponse = await axios.post(
-                "http://localhost:3000/recipe-search",
+                "http://localhost:4000/recipe-search",
                 { recipeInput: destinationInput }
             );
 
@@ -123,7 +123,7 @@ function Recherche() {
     const Save = async () => {
         try {
             await axios.post(
-                "http://localhost:3000/recipes/add-recipe",
+                "http://localhost:4000/recipes/add-recipe",
                 recipeData
             );
 

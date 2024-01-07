@@ -1,5 +1,6 @@
 const express = require("express");
 const cors = require("cors");
+const path = require("path");
 require("dotenv").config();
 
 const UserRouter = require("./routes/user");
@@ -23,10 +24,15 @@ const openai = new OpenAI({
 });
 
 app.use(express.json());
+app.use(express.static("./client/build"));
 
 app.use("/users", UserRouter);
 app.use("/recipes", RecipeRouter);
 app.use("/recipe-ratings", RecipeRatingRouter);
+
+app.get("/*", (req, res) => {
+    res.sendFile(path.join(__dirname, "./client/build/index.html"));
+});
 
 app.post("/recipe-search", async (req, res) => {
     try {

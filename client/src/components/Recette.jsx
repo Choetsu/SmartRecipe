@@ -7,7 +7,7 @@ function Recette() {
 
     useEffect(() => {
         const fetchRecipes = async () => {
-            const response = await axios.get("http://localhost:3000/recipes");
+            const response = await axios.get("http://localhost:4000/recipes");
 
             setRecipes(response.data);
         };
