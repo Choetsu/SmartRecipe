@@ -1,9 +1,21 @@
 const Sequelize = require("sequelize");
 require("dotenv").config();
 
-const connection = new Sequelize(process.env.HEROKU_POSTGRESQL_SILVER_URL, {
-    logging: false,
-});
+let sequelizeOptions = {
+    dialect: "postgres",
+    protocol: "postgres",
+    dialectOptions: {
+        ssl: {
+            require: true,
+            rejectUnauthorized: false,
+        },
+    },
+};
+
+const connection = new Sequelize(
+    process.env.HEROKU_POSTGRESQL_SILVER_URL,
+    sequelizeOptions
+);
 
 connection
     .authenticate()
