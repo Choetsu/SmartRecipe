@@ -1,6 +1,6 @@
 const genericRouter = require("./generic");
 const genericController = require("../controllers/generic");
-const recipeController = require("../controllers/recipe");
+const recipeController = require("../controllers/recipeRating");
 const RecipeRatingService = require("../services/recipeRating");
 
 module.exports = new genericRouter(
@@ -15,27 +15,20 @@ module.exports = new genericRouter(
                 path: "/add-recipe-rating",
                 middleware: [],
             },
+            {
+                handler: "getRecipeRating",
+                method: "get",
+                path: "/comments/:recipeId",
+                middleware: [],
+            },
+            {
+                handler: "getRecipeRatingByUserId",
+                method: "get",
+                path: "/user/:userId",
+                middleware: [],
+            },
         ],
-        defaultRoutes: {
-            getOne: {
-                method: "get",
-                path: "/:id",
-                middleware: [],
-                active: true,
-            },
-            getAll: {
-                method: "get",
-                path: "/",
-                middleware: [],
-                active: true,
-            },
-            create: {
-                method: "post",
-                path: "/",
-                middleware: [],
-                active: true,
-            },
-        },
+        defaultRoutes: false,
         middlewares: [],
     }
 );

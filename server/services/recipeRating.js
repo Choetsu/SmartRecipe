@@ -4,7 +4,7 @@ const ValidationError = require("../errors/ValidationError");
 const UniqueConstraintError = require("../errors/UniqueConstraintError");
 const UnauthorizedError = require("../errors/UnauthorizedError");
 
-module.exports = function RecipeRatingService() {
+module.exports = function () {
     return {
         findAll: async function (filters, options) {
             let dbOptions = {
@@ -73,6 +73,18 @@ module.exports = function RecipeRatingService() {
         },
         delete: async (filters) => {
             return RecipeRating.destroy({ where: filters });
+        },
+        getRecipeRating: async (recipeId) => {
+            const recipeRating = await RecipeRating.findAll({
+                where: { recipe_id: recipeId },
+            });
+            return recipeRating;
+        },
+        getRecipeRatingByUserId: async (userId) => {
+            const recipeRating = await RecipeRating.findAll({
+                where: { user_id: userId },
+            });
+            return recipeRating;
         },
     };
 };

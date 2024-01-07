@@ -16,5 +16,28 @@ module.exports = function RecipeRatingController(RecipeRatingService) {
                 }
             }
         },
+        getRecipeRating: async (req, res, next) => {
+            try {
+                const recipeId = req.params.recipeId;
+                const recipeRating = await RecipeRatingService.getRecipeRating(
+                    recipeId
+                );
+                return res.status(200).json(recipeRating);
+            } catch (error) {
+                console.error(error);
+                next(error);
+            }
+        },
+        getRecipeRatingByUserId: async (req, res, next) => {
+            try {
+                const userId = req.params.userId;
+                const recipeRating =
+                    await RecipeRatingService.getRecipeRatingByUserId(userId);
+                return res.status(200).json(recipeRating);
+            } catch (error) {
+                console.error(error);
+                next(error);
+            }
+        },
     };
 };

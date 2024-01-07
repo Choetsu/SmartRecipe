@@ -3,6 +3,7 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import { StarIcon } from "@heroicons/react/24/solid";
 import { StarIcon as StarIconFilled } from "@heroicons/react/24/solid";
+import { ClipboardDocumentIcon, ShareIcon } from "@heroicons/react/24/solid";
 
 function RecetteDetails() {
     const [recipe, setRecipe] = React.useState([]);
@@ -15,9 +16,36 @@ function RecetteDetails() {
 
     const [rating, setRating] = React.useState(0);
     const [comment, setComment] = React.useState("");
+    const [commentList, setCommentList] = React.useState([]);
+
+    const [recommendedRecipes, setRecommendedRecipes] = React.useState([]);
+    const [isLoadingRecommend, setIsLoadingRecommend] = React.useState(false);
+    const [showModal, setShowModal] = React.useState(false);
+
+    const [recommendedAccompagnements, setRecommendedAccompagnements] =
+        React.useState([]);
+    const [isLoadingAccompagnements, setIsLoadingAccompagnements] =
+        React.useState(false);
+    const [showModalAccompagnements, setShowModalAccompagnements] =
+        React.useState(false);
+
+    const [groceryList, setGroceryList] = React.useState([]);
+    const [isLoadingGroceryList, setIsLoadingGroceryList] =
+        React.useState(false);
+    const [showModalGroceryList, setShowModalGroceryList] =
+        React.useState(false);
+
+    const [caloricIndications, setCaloricIndications] = React.useState([]);
+    const [isLoadingCaloricIndications, setIsLoadingCaloricIndications] =
+        React.useState(false);
+    const [showModalCaloricIndications, setShowModalCaloricIndications] =
+        React.useState(false);
 
     const checkIfFavorite = async () => {
         try {
+            if (userId === null) {
+                return;
+            }
             const favoriteResponse = await axios.get(
                 `http://localhost:3000/users/favorite-recipes/${userId}`
             );
@@ -30,6 +58,16 @@ function RecetteDetails() {
             });
         } catch (error) {
             console.error("Erreur lors de la vérification des favoris:", error);
+        }
+    };
+    const fetchComments = async () => {
+        try {
+            const commentsResponse = await axios.get(
+                `http://localhost:3000/recipe-ratings/comments/${recipeId}`
+            );
+            setCommentList(commentsResponse.data);
+        } catch (error) {
+            console.error(error);
         }
     };
 
@@ -50,6 +88,7 @@ function RecetteDetails() {
         }
 
         fetchRecipeData();
+        fetchComments();
         setIsLoading(false);
     }, [recipeId, userId]);
 
@@ -84,15 +123,144 @@ function RecetteDetails() {
     };
 
     const toggleFavorite = async () => {
-        if (isFavorite) {
-            await removeFromFavorites();
+        if (userId !== null) {
+            try {
+                if (isFavorite) {
+                    await removeFromFavorites();
+                } else {
+                    await addToFavorites();
+                }
+            } catch (error) {
+                console.error(error);
+            }
         } else {
-            await addToFavorites();
+            window.location = "/login";
         }
     };
 
     const handleRatingSubmit = async () => {
-        // Logique pour envoyer la note et le commentaire à l'API
+        if (userId !== null) {
+            try {
+                await axios.post(
+                    `http://localhost:3000/recipe-ratings/add-recipe-rating`,
+                    {
+                        rating: rating,
+                        comment: comment,
+                        user_id: userId,
+                        recipe_id: recipeId,
+                    }
+                );
+                setRating(0);
+                setComment("");
+                fetchComments();
+            } catch (error) {
+                console.error(error);
+            }
+        } else {
+            window.location = "/login";
+        }
+    };
+    const fetchRecommendedRecipes = async () => {
+        setIsLoadingRecommend(true);
+        try {
+            const response = await axios.post(
+                `http://localhost:3000/recommendations`,
+                {
+                    recommendationsInput: recipe.name,
+                }
+            );
+            setRecommendedRecipes(response.data);
+            setShowModal(true);
+        } catch (error) {
+            console.error(error);
+        }
+        setIsLoadingRecommend(false);
+    };
+
+    const fetchAccompagnements = async () => {
+        setIsLoadingAccompagnements(true);
+        try {
+            const response = await axios.post(
+                `http://localhost:3000/accompaniment`,
+                {
+                    accompanimentInput: recipe.name,
+                }
+            );
+            setRecommendedAccompagnements(response.data);
+            setShowModalAccompagnements(true);
+        } catch (error) {
+            console.error(error);
+        }
+        setIsLoadingAccompagnements(false);
+    };
+
+    const fetchGroceryList = async () => {
+        setIsLoadingGroceryList(true);
+        try {
+            const response = await axios.post(
+                `http://localhost:3000/grocery-list`,
+                {
+                    groceryListInput: recipe.name,
+                }
+            );
+            setGroceryList(response.data);
+            setShowModalGroceryList(true);
+        } catch (error) {
+            console.error(error);
+        }
+        setIsLoadingGroceryList(false);
+    };
+
+    const fetchIndicatorsCalories = async () => {
+        setIsLoadingCaloricIndications(true);
+        try {
+            const response = await axios.post(
+                `http://localhost:3000/caloric-indications`,
+                {
+                    caloricIndicationsInput: recipe.name,
+                }
+            );
+            setCaloricIndications(response.data);
+            setShowModalCaloricIndications(true);
+        } catch (error) {
+            console.error(error);
+        }
+        setIsLoadingCaloricIndications(false);
+    };
+
+    const handleCloseModal = () => {
+        setShowModal(false);
+    };
+
+    const handleCloseModalAccompagnements = () => {
+        setShowModalAccompagnements(false);
+    };
+
+    const handleCloseModalGroceryList = () => {
+        setShowModalGroceryList(false);
+    };
+
+    const handleCloseModalCaloricIndications = () => {
+        setShowModalCaloricIndications(false);
+    };
+
+    const copyToClipboard = () => {
+        const el = document.createElement("textarea");
+        el.value = groceryList;
+        document.body.appendChild(el);
+        el.select();
+        document.execCommand("copy");
+        document.body.removeChild(el);
+        alert("Liste de courses copiée dans le presse-papier !");
+    };
+
+    const shareByMail = () => {
+        let mailtoLink =
+            "mailto:?subject=" +
+            encodeURIComponent("Liste de courses") +
+            "&body=" +
+            encodeURIComponent(groceryList);
+        window.open(mailtoLink, "_blank");
     };
 
     return (
@@ -128,17 +296,200 @@ function RecetteDetails() {
                         <p>Temps de cuisson {recipe.cooking_time}</p>
                         <p>Catégorie {recipe.categorie}</p>
                     </div>
-                    <button
-                        onClick={toggleFavorite}
-                        className="mt-4 flex items-center justify-center p-2 bg-yellow-400 rounded-full shadow-lg hover:bg-yellow-500 transition duration-300"
-                    >
-                        {isFavorite ? (
-                            <StarIconFilled className="h-6 w-6 text-white" />
-                        ) : (
-                            <StarIcon className="h-6 w-6 text-white" />
+                    <div className="flex justify-center items-center space-x-4 mt-4">
+                        <button
+                            onClick={toggleFavorite}
+                            className="flex items-center justify-center p-2 bg-yellow-400 rounded-full shadow-lg hover:bg-yellow-500 transition duration-300"
+                        >
+                            {isFavorite ? (
+                                <StarIconFilled className="h-6 w-6 text-white" />
+                            ) : (
+                                <StarIcon className="h-6 w-6 text-white" />
+                            )}
+                        </button>
+
+                        <button
+                            onClick={fetchRecommendedRecipes}
+                            className="flex items-center justify-center p-2 bg-green-400 rounded-full shadow-lg hover:bg-green-500 transition duration-300"
+                        >
+                            <span className="text-white ml-2">
+                                Recommandations
+                            </span>
+                        </button>
+                        {isLoadingRecommend && (
+                            <div className="fixed inset-0 bg-gray-600 bg-opacity-50 z-50 flex justify-center items-center">
+                                <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-blue-500"></div>
+                            </div>
                         )}
-                        <span className="text-white ml-2">Favoris</span>
-                    </button>
+                        {showModal && (
+                            <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
+                                <div className="relative top-10 mx-auto p-5 border w-3/4 lg:w-1/2 shadow-lg rounded-md bg-white">
+                                    <div className="mt-3 text-center">
+                                        <h3 className="text-xl leading-6 font-medium text-gray-900">
+                                            Recommandations de Recettes
+                                        </h3>
+                                        <div className="mt-2 px-7 py-3">
+                                            <p className="text-sm text-gray-500">
+                                                Recettes similaires à{" "}
+                                                {recipe.name}
+                                            </p>
+                                            {recommendedRecipes}
+                                        </div>
+                                        <div className="items-center px-4 py-3">
+                                            <button
+                                                onClick={handleCloseModal}
+                                                className="px-4 py-2 bg-blue-500 text-white text-base font-medium rounded-md w-full shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                                            >
+                                                Fermer
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+
+                        <button
+                            onClick={fetchAccompagnements}
+                            className="flex items-center justify-center p-2 bg-blue-400 rounded-full shadow-lg hover:bg-blue-500 transition duration-300"
+                        >
+                            <span className="text-white ml-2">
+                                Accompagnements
+                            </span>
+                        </button>
+                        {isLoadingAccompagnements && (
+                            <div className="fixed inset-0 bg-gray-600 bg-opacity-50 z-50 flex justify-center items-center">
+                                <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-blue-500"></div>
+                            </div>
+                        )}
+                        {showModalAccompagnements && (
+                            <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
+                                <div className="relative top-10 mx-auto p-5 border w-3/4 lg:w-1/2 shadow-lg rounded-md bg-white">
+                                    <div className="mt-3 text-center">
+                                        <h3 className="text-xl leading-6 font-medium text-gray-900">
+                                            Accompagnements de Recettes
+                                        </h3>
+                                        <div className="mt-2 px-7 py-3">
+                                            <p className="text-sm text-gray-500">
+                                                Accompagnement de la recette{" "}
+                                                {recipe.name}
+                                            </p>
+                                            {recommendedAccompagnements}
+                                        </div>
+                                        <div className="items-center px-4 py-3">
+                                            <button
+                                                onClick={
+                                                    handleCloseModalAccompagnements
+                                                }
+                                                className="px-4 py-2 bg-blue-500 text-white text-base font-medium rounded-md w-full shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                                            >
+                                                Fermer
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+
+                        <button
+                            onClick={fetchGroceryList}
+                            className="flex items-center justify-center p-2 bg-orange-400 rounded-full shadow-lg hover:bg-orange-500 transition duration-300"
+                        >
+                            <span className="text-white ml-2">
+                                Liste de courses
+                            </span>
+                        </button>
+                        {isLoadingGroceryList && (
+                            <div className="fixed inset-0 bg-gray-600 bg-opacity-50 z-50 flex justify-center items-center">
+                                <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-blue-500"></div>
+                            </div>
+                        )}
+                        {showModalGroceryList && (
+                            <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
+                                <div className="relative top-10 mx-auto p-5 border w-3/4 lg:w-1/2 shadow-lg rounded-md bg-white">
+                                    <div className="mt-3 text-center">
+                                        <h3 className="text-xl leading-6 font-medium text-gray-900">
+                                            Liste de courses
+                                        </h3>
+                                        <div className="mt-2 px-7 py-3">
+                                            <p className="text-sm text-gray-500">
+                                                Liste de courses pour la recette{" "}
+                                                {recipe.name}
+                                            </p>
+                                            {groceryList}
+                                        </div>
+                                        <div className="flex justify-around items-center mt-4">
+                                            <button
+                                                onClick={copyToClipboard}
+                                                className="flex items-center bg-blue-500 text-white px-3 py-2 rounded hover:bg-blue-700"
+                                            >
+                                                <ClipboardDocumentIcon className="h-5 w-5 mr-2" />
+                                                Copier
+                                            </button>
+                                            <button
+                                                onClick={shareByMail}
+                                                className="flex items-center bg-orange-500 text-white px-3 py-2 rounded hover:bg-orange-700"
+                                            >
+                                                <ShareIcon className="h-5 w-5 mr-2" />
+                                                Partager
+                                            </button>
+                                        </div>
+                                        <div className="items-center px-4 py-3">
+                                            <button
+                                                onClick={
+                                                    handleCloseModalGroceryList
+                                                }
+                                                className="px-4 py-2 bg-blue-500 text-white text-base font-medium rounded-md w-full shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                                            >
+                                                Fermer
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+
+                        <button
+                            onClick={fetchIndicatorsCalories}
+                            className="flex items-center justify-center p-2 bg-red-400 rounded-full shadow-lg hover:bg-red-500 transition duration-300"
+                        >
+                            <span className="text-white ml-2">
+                                Indications caloriques
+                            </span>
+                        </button>
+                        {isLoadingCaloricIndications && (
+                            <div className="fixed inset-0 bg-gray-600 bg-opacity-50 z-50 flex justify-center items-center">
+                                <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-blue-500"></div>
+                            </div>
+                        )}
+                        {showModalCaloricIndications && (
+                            <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
+                                <div className="relative top-10 mx-auto p-5 border w-3/4 lg:w-1/2 shadow-lg rounded-md bg-white">
+                                    <div className="mt-3 text-center">
+                                        <h3 className="text-xl leading-6 font-medium text-gray-900">
+                                            Indications caloriques
+                                        </h3>
+                                        <div className="mt-2 px-7 py-3">
+                                            <p className="text-sm text-gray-500">
+                                                Indications caloriques pour la
+                                                recette {recipe.name}
+                                            </p>
+                                            {caloricIndications}
+                                        </div>
+                                        <div className="items-center px-4 py-3">
+                                            <button
+                                                onClick={
+                                                    handleCloseModalCaloricIndications
+                                                }
+                                                className="px-4 py-2 bg-blue-500 text-white text-base font-medium rounded-md w-full shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                                            >
+                                                Fermer
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+                    </div>
                 </>
             )}
 
@@ -172,6 +523,23 @@ function RecetteDetails() {
                 >
                     Soumettre
                 </button>
+            </div>
+
+            <div className="mt-4">
+                <h3 className="text-lg font-semibold mb-3">Avis :</h3>
+                <ul className="list-none">
+                    {commentList.map((comment) => (
+                        <li
+                            key={comment.id}
+                            className="bg-gray-100 p-4 rounded-lg shadow mb-3"
+                        >
+                            <p className="text-gray-800">{comment.comment}</p>
+                            <div className="text-yellow-500 text-sm">
+                                Note : {comment.rating}/5
+                            </div>
+                        </li>
+                    ))}
+                </ul>
             </div>
         </div>
     );

@@ -26,17 +26,21 @@ function Favoris() {
 
     return (
         <div className="Favoris bg-white p-8">
-            <h1 className="text-2xl font-bold text-gray-800 mb-4">Favoris</h1>
-            <ul className="list-disc pl-5">
+            <ul className="space-y-4">
                 {favoris.map((favori) => (
-                    <li key={favori.id} className="mb-3">
-                        <h2 className="text-xl font-semibold text-gray-700">
+                    <li
+                        key={favori.id}
+                        className="bg-gray-100 p-4 rounded-lg shadow"
+                    >
+                        <h2 className="text-xl font-semibold text-gray-800 mb-2">
                             {favori.name}
                         </h2>
-                        <p className="text-gray-600">{favori.description}</p>
+                        <p className="text-gray-600 mb-4">
+                            {favori.description}
+                        </p>
                         <Link
                             to={`/recipe-details/${favori.id}`}
-                            className="inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-2"
+                            className="inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                         >
                             Voir Détails
                         </Link>

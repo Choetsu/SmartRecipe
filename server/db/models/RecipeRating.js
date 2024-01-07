@@ -35,7 +35,7 @@ module.exports = (connection) => {
                         msg: "Le commentaire est obligatoire",
                     },
                     len: {
-                        args: [10, 500],
+                        args: [1, 500],
                         msg: "Le commentaire doit contenir entre 10 et 500 caractères",
                     },
                 },

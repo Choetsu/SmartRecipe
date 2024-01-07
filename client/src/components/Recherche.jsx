@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import Chatbot from "./Chatbot";
 import { useNavigate } from "react-router-dom";
+import { MicrophoneIcon } from "@heroicons/react/24/solid";
 
 function Recherche() {
     const [destinationInput, setDestinationInput] = useState("");
@@ -19,6 +20,17 @@ function Recherche() {
     });
 
     const handleSearch = async () => {
+        setResponse([]);
+        setRecipeData({
+            name: "",
+            description: "",
+            ingredient: "",
+            instruction: "",
+            preparation_time: "",
+            cooking_time: "",
+            categorie: "",
+        });
+
         setLoading(true);
         try {
             const searchResponse = await axios.post(
@@ -121,6 +133,24 @@ function Recherche() {
         }
     };
 
+    const startListening = () => {
+        if ("webkitSpeechRecognition" in window) {
+            const recognition = new window.webkitSpeechRecognition();
+            recognition.lang = "fr-FR";
+            recognition.start();
+
+            recognition.onresult = (event) => {
+                const voiceInput = event.results[0][0].transcript;
+                setDestinationInput(voiceInput);
+                handleSearch();
+            };
+        } else {
+            alert(
+                "La reconnaissance vocale n'est pas prise en charge par votre navigateur."
+            );
+        }
+    };
+
     return (
         <div className="bg-white p-8 shadow-xl rounded-xl max-w-xl mx-auto">
             <h1 className="text-3xl font-bold text-gray-900 mb-6">
@@ -139,6 +169,12 @@ function Recherche() {
                     className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded"
                 >
                     Rechercher
+                </button>
+                <button
+                    onClick={startListening}
+                    className="bg-red-500 hover:bg-red-700 text-white font-bold py-3 px-6 rounded"
+                >
+                    <MicrophoneIcon className="h-6 w-6" />
                 </button>
             </div>
             {loading && (
