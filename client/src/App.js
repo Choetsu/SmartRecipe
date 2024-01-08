@@ -22,14 +22,16 @@ function App() {
     return (
         <Router>
             <div>
-                <nav className="bg-white shadow fixed top-0 left-0 right-0 z-50 mb-24">
+                <nav className="bg-white shadow fixed top-0 left-0 right-0 z-50">
                     <div className="container mx-auto px-6 py-4 flex items-center justify-between">
                         <div className="flex items-center space-x-4">
-                            <img
-                                src={logo}
-                                alt="logo"
-                                className="h-14 border-2 border-blue-500 rounded-full"
-                            />
+                            <Link to="/">
+                                <img
+                                    src={logo}
+                                    alt="logo"
+                                    className="h-14 border-2 border-blue-500 rounded-full"
+                                />
+                            </Link>
                         </div>
 
                         <div className="flex items-center space-x-6">
@@ -92,7 +94,7 @@ function App() {
                     </div>
                 </nav>
 
-                <div className="pt-24 mt-16">
+                <div className="pt-18">
                     <Routes>
                         <Route path="/" element={<Recherche />} />
                         <Route path="/recettes" element={<Recette />} />

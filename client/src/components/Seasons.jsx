@@ -40,34 +40,41 @@ function Seasons() {
     }, [selectedSeason, apiUrl]);
 
     return (
-        <div className="Seasons">
-            <div className="flex justify-around flex-wrap">
-                {seasons.map((season) => (
-                    <div
-                        key={season.name}
-                        className="card flex flex-col items-center bg-white rounded-lg shadow-md m-4 p-4 cursor-pointer hover:bg-gray-100"
-                        onClick={() => setSelectedSeason(season.name)}
-                    >
-                        <img
-                            src={season.image}
-                            alt={season.name}
-                            className="h-40 w-40 object-cover rounded-full"
-                        />
-                        <span className="mt-2 text-lg font-semibold">
-                            {season.name}
-                        </span>
-                    </div>
-                ))}
-            </div>
-            <div className="recommendations mt-6">
-                {isLoading ? (
-                    <p className="text-center">Chargement...</p>
-                ) : (
-                    <div className="flex justify-around">{recommendations}</div>
-                )}
+        <>
+            <div className="mt-32">
+                <h1 className="text-2xl font-semibold text-gray-800 mb-4 text-center">
+                    Sélectionnez une saison pour voir les recettes de saison !
+                </h1>
+                <div className="flex justify-around flex-wrap">
+                    {seasons.map((season) => (
+                        <div
+                            key={season.name}
+                            className="card flex flex-col items-center bg-white rounded-lg shadow-md m-4 p-4 cursor-pointer hover:bg-gray-100"
+                            onClick={() => setSelectedSeason(season.name)}
+                        >
+                            <img
+                                src={season.image}
+                                alt={season.name}
+                                className="h-40 w-40 object-cover rounded-full"
+                            />
+                            <span className="mt-2 text-lg font-semibold">
+                                {season.name}
+                            </span>
+                        </div>
+                    ))}
+                </div>
+                <div className="recommendations mt-6">
+                    {isLoading ? (
+                        <p className="text-center">Chargement...</p>
+                    ) : (
+                        <div className="flex justify-around">
+                            {recommendations}
+                        </div>
+                    )}
+                </div>
             </div>
             <Chatbot />
-        </div>
+        </>
     );
 }
 

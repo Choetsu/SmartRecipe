@@ -149,51 +149,53 @@ function Recherche() {
     };
 
     return (
-        <div className="bg-white p-8 shadow-xl rounded-xl max-w-xl mx-auto">
-            <h1 className="text-3xl font-bold text-gray-900 mb-6">
-                Moteur de Recherche de Recette
-            </h1>
-            <div className="flex gap-4 mb-4">
-                <input
-                    type="text"
-                    placeholder="Rechercher de recette"
-                    value={destinationInput}
-                    onChange={(e) => setDestinationInput(e.target.value)}
-                    className="flex-grow p-4 border border-gray-300 rounded-lg"
-                />
-                <button
-                    onClick={handleSearch}
-                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded"
-                >
-                    Rechercher
-                </button>
-                <button
-                    onClick={startListening}
-                    className="bg-red-500 hover:bg-red-700 text-white font-bold py-3 px-6 rounded"
-                >
-                    <MicrophoneIcon className="h-6 w-6" />
-                </button>
-            </div>
-            {loading && (
-                <div className="text-gray-500">Chargement en cours...</div>
-            )}
-            <ul className="list-disc pl-5">
-                {response.map((item, index) => (
-                    <li key={index} className="text-gray-800">
-                        {item}
-                    </li>
-                ))}
-            </ul>
-            <div className="mt-6">
-                <button
-                    onClick={Save}
-                    className="bg-green-500 hover:bg-green-700 text-white font-bold py-3 px-6 rounded"
-                >
-                    Ajouter aux recettes du site
-                </button>
+        <>
+            <div className="bg-white p-8 shadow-xl rounded-xl max-w-3xl mx-auto mt-32">
+                <h1 className="text-3xl font-bold text-gray-900 mb-6">
+                    Moteur de Recherche de Recette
+                </h1>
+                <div className="flex gap-4 mb-4">
+                    <input
+                        type="text"
+                        placeholder="Rechercher de recette"
+                        value={destinationInput}
+                        onChange={(e) => setDestinationInput(e.target.value)}
+                        className="flex-grow p-4 border border-gray-300 rounded-lg"
+                    />
+                    <button
+                        onClick={handleSearch}
+                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded"
+                    >
+                        Rechercher
+                    </button>
+                    <button
+                        onClick={startListening}
+                        className="bg-red-500 hover:bg-red-700 text-white font-bold py-3 px-6 rounded"
+                    >
+                        <MicrophoneIcon className="h-6 w-6" />
+                    </button>
+                </div>
+                {loading && (
+                    <div className="text-gray-500">Chargement en cours...</div>
+                )}
+                <ul className="list-disc pl-5">
+                    {response.map((item, index) => (
+                        <li key={index} className="text-gray-800">
+                            {item}
+                        </li>
+                    ))}
+                </ul>
+                <div className="mt-6">
+                    <button
+                        onClick={Save}
+                        className="bg-green-500 hover:bg-green-700 text-white font-bold py-3 px-6 rounded"
+                    >
+                        Ajouter aux recettes du site
+                    </button>
+                </div>
             </div>
             <Chatbot />
-        </div>
+        </>
     );
 }
 
