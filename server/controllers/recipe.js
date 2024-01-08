@@ -23,6 +23,7 @@ module.exports = function RecipeController(RecipeService) {
                 return res.status(200).json(recipes);
             } catch (error) {
                 console.error(error);
+                res.status(500).json(error);
                 next(error);
             }
         },

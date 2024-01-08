@@ -24,7 +24,7 @@ function Recette() {
 
     return (
         <div className="Recette">
-            {/* {isLoading ? (
+            {isLoading ? (
                 <p>Chargement...</p>
             ) : recipes.length > 0 ? (
                 <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -52,7 +52,7 @@ function Recette() {
                 </ul>
             ) : (
                 <p className="text-center">Aucune recette trouvée</p>
-            )} */}
+            )}
         </div>
     );
 }

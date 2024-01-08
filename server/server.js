@@ -24,11 +24,6 @@ const openai = new OpenAI({
 });
 
 app.use(express.json());
-app.use(express.static(path.join(__dirname, "../client/build")));
-
-app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "../client/build", "index.html"));
-});
 
 app.use("/users", UserRouter);
 app.use("/recipes", RecipeRouter);
@@ -256,6 +251,12 @@ app.post("/caloric-indications", async (req, res) => {
 
 app.get("/", (req, res) => {
     res.send("Hello World");
+});
+
+app.use(express.static(path.join(__dirname, "../client/build")));
+
+app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "../client/build", "index.html"));
 });
 
 module.exports = app;
