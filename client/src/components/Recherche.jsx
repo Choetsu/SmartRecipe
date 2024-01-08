@@ -20,6 +20,17 @@ function Recherche() {
         categorie: "",
     });
 
+    const fetchRecipes = async () => {
+        try {
+            const response = await axios.get(`${apiUrl}/recipes`);
+            return response.data;
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    const recipes = fetchRecipes();
+
     const handleSearch = async () => {
         setResponse([]);
         setRecipeData({
@@ -35,7 +46,12 @@ function Recherche() {
         setLoading(true);
         try {
             const searchResponse = await axios.post(`${apiUrl}/recipe-search`, {
-                recipeInput: destinationInput,
+                recipeInput:
+                    "Voici les recettes stockées dans la base de données" +
+                    recipes +
+                    "\n" +
+                    "voici la demande de l'utilisateur" +
+                    destinationInput,
             });
 
             const responseList = searchResponse.data.split("\n");

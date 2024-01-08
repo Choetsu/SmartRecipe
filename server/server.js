@@ -39,12 +39,12 @@ app.post("/recipe-search", async (req, res) => {
                 {
                     role: "system",
                     content:
-                        "Tu es un moteur de recherche pour les recettes de cuisine, tu dois afficher les recettes qui correspondent à la recherche de l'utilisateur." +
-                        " Il faut que tu donnes les ingrédients et les étapes de la recette." +
-                        " Tu dois donner la réponse sous la forme suivante : " +
-                        " Nom de la recette : , Description de la recette : , Ingrédients : , Étapes de la recette : , Temps de préparation : , Temps de cuisson : , Catégorie : . Ces informations sont obligatoires et doivent suivre le format." +
-                        " Quand l'utilisateur te donne le nom d'un plat, tu dois lui donner la recette correspondante." +
-                        " Tu ne dois répondre qu'aux questions qui sont en rapport avec la cuisine.",
+                        "Tu es un moteur de recherche intelligent pour trouver des recettes de cuisine." +
+                        " Tu as accès à une liste de recettes que je vais te fournir." +
+                        " Ta tâche est de trouver la meilleure correspondance possible dans cette liste pour répondre à la demande de l'utilisateur." +
+                        " Si aucune recette exacte n'est trouvée, propose la recette la plus proche en termes d'ingrédients ou de style culinaire." +
+                        " Les réponses doivent inclure le nom de la recette, une brève description, les ingrédients, les étapes de la recette, le temps de préparation, le temps de cuisson et la catégorie." +
+                        " Focus uniquement sur les requêtes liées à la cuisine.",
                 },
                 {
                     role: "user",
