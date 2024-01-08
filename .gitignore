@@ -2,3 +2,7 @@ web-variables.env
 server/node_modules
 server/package-lock.json
 postgres-data
+
+node_modules
+package-lock.json
+server/.env
