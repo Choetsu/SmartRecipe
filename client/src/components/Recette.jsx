@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import Chatbot from "./Chatbot";
 
 function Recette() {
     const [recipes, setRecipes] = useState([]);
@@ -11,7 +12,6 @@ function Recette() {
         const fetchRecipes = async () => {
             try {
                 const response = await axios.get(`${apiUrl}/recipes`);
-                console.log(response.data);
                 setRecipes(response.data);
             } catch (error) {
                 console.error(error);
@@ -53,6 +53,7 @@ function Recette() {
             ) : (
                 <p className="text-center">Aucune recette trouvée</p>
             )}
+            <Chatbot />
         </div>
     );
 }

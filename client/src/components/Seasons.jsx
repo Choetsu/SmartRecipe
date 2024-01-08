@@ -4,6 +4,7 @@ import springImage from "../assets/images/spring.jpg";
 import summerImage from "../assets/images/summer.jpg";
 import autumnImage from "../assets/images/autumn.jpg";
 import winterImage from "../assets/images/winter.jpg";
+import Chatbot from "./Chatbot";
 
 function Seasons() {
     const [selectedSeason, setSelectedSeason] = useState(null);
@@ -65,6 +66,7 @@ function Seasons() {
                     <div className="flex justify-around">{recommendations}</div>
                 )}
             </div>
+            <Chatbot />
         </div>
     );
 }

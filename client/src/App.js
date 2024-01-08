@@ -22,73 +22,98 @@ function App() {
     return (
         <Router>
             <div>
-                <nav>
-                    <ul>
-                        <li>
-                            <img src={logo} alt="logo" />
-                        </li>
-                        <li>
-                            <Link to="/">Accueil</Link>
-                        </li>
-                        <li>
-                            <Link to="/recettes">Recettes</Link>
-                        </li>
-                        <li>
-                            <Link to="/recettes-saisonnieres">
+                <nav className="bg-white shadow fixed top-0 left-0 right-0 z-50 mb-24">
+                    <div className="container mx-auto px-6 py-4 flex items-center justify-between">
+                        <div className="flex items-center space-x-4">
+                            <img
+                                src={logo}
+                                alt="logo"
+                                className="h-14 border-2 border-blue-500 rounded-full"
+                            />
+                        </div>
+
+                        <div className="flex items-center space-x-6">
+                            <Link
+                                to="/"
+                                className="text-gray-800 hover:text-blue-600 transition duration-300"
+                            >
+                                Accueil
+                            </Link>
+                            <Link
+                                to="/recettes"
+                                className="text-gray-800 hover:text-blue-600 transition duration-300"
+                            >
+                                Recettes
+                            </Link>
+                            <Link
+                                to="/recettes-saisonnieres"
+                                className="text-gray-800 hover:text-blue-600 transition duration-300"
+                            >
                                 Recettes saisonnières
                             </Link>
-                        </li>
-                        <li>
-                            {isLoggedIn ? (
-                                <Link to="/favoris">Favoris</Link>
-                            ) : (
-                                ""
+                            {isLoggedIn && (
+                                <Link
+                                    to="/favoris"
+                                    className="text-gray-800 hover:text-blue-600 transition duration-300"
+                                >
+                                    Favoris
+                                </Link>
                             )}
-                        </li>
-                        <li>
+                        </div>
+
+                        <div className="flex items-center space-x-4">
                             {isLoggedIn ? (
                                 <Link
                                     onClick={() => {
                                         localStorage.removeItem("userId");
                                         setIsLoggedIn(false);
                                     }}
+                                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300"
                                 >
                                     Déconnexion
                                 </Link>
                             ) : (
-                                <Link to="/login">Connexion</Link>
+                                <>
+                                    <Link
+                                        to="/login"
+                                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300"
+                                    >
+                                        Connexion
+                                    </Link>
+                                    <Link
+                                        to="/register"
+                                        className="bg-gray-200 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded transition duration-300"
+                                    >
+                                        Inscription
+                                    </Link>
+                                </>
                             )}
-                        </li>
-                        <li>
-                            {isLoggedIn ? (
-                                ""
-                            ) : (
-                                <Link to="/register">Inscription</Link>
-                            )}
-                        </li>
-                    </ul>
+                        </div>
+                    </div>
                 </nav>
 
-                <Routes>
-                    <Route path="/" element={<Recherche />} />
-                    <Route path="/recettes" element={<Recette />} />
-                    <Route
-                        path="/login"
-                        element={<Login setIsLoggedIn={setIsLoggedIn} />}
-                    />
-                    <Route
-                        path="/recettes-details/:id"
-                        element={
-                            <RecetteDetails setIsLoggedIn={setIsLoggedIn} />
-                        }
-                    />
-                    <Route path="/favoris" element={<Favoris />} />
-                    <Route
-                        path="/recettes-saisonnieres"
-                        element={<Seasons />}
-                    />
-                    <Route path="/register" element={<Register />} />
-                </Routes>
+                <div className="pt-24 mt-16">
+                    <Routes>
+                        <Route path="/" element={<Recherche />} />
+                        <Route path="/recettes" element={<Recette />} />
+                        <Route
+                            path="/login"
+                            element={<Login setIsLoggedIn={setIsLoggedIn} />}
+                        />
+                        <Route
+                            path="/recettes-details/:id"
+                            element={
+                                <RecetteDetails setIsLoggedIn={setIsLoggedIn} />
+                            }
+                        />
+                        <Route path="/favoris" element={<Favoris />} />
+                        <Route
+                            path="/recettes-saisonnieres"
+                            element={<Seasons />}
+                        />
+                        <Route path="/register" element={<Register />} />
+                    </Routes>
+                </div>
             </div>
         </Router>
     );

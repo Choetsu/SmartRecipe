@@ -15,7 +15,6 @@ function Favoris() {
                 const response = await axios.get(
                     `${apiUrl}/users/favorite-recipes/${userId}`
                 );
-
                 setFavoris(response.data);
             } catch (error) {
                 console.error(error);

@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import { StarIcon as StarIconFilled } from "@heroicons/react/24/solid";
 import { StarIcon as StarIconOutline } from "@heroicons/react/24/outline";
 import { ClipboardDocumentIcon, ShareIcon } from "@heroicons/react/24/solid";
+import Chatbot from "./Chatbot";
 
 function RecetteDetails() {
     const [recipe, setRecipe] = useState([]);
@@ -540,6 +541,7 @@ function RecetteDetails() {
                     ))}
                 </ul>
             </div>
+            <Chatbot />
         </div>
     );
 }
