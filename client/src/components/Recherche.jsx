@@ -124,7 +124,7 @@ function Recherche() {
         try {
             await axios.post(`${apiUrl}/recipes/add-recipe`, recipeData);
 
-            navigate("/recette");
+            navigate("/recettes");
         } catch (error) {
             console.error("Erreur lors de la sauvegarde :", error);
         }
