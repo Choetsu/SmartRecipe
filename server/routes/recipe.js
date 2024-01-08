@@ -15,6 +15,12 @@ module.exports = new genericRouter(
                 path: "/add-recipe",
                 middleware: [],
             },
+            {
+                handler: "findAll",
+                method: "get",
+                path: "/",
+                middleware: [],
+            },
         ],
         defaultRoutes: {
             getOne: {

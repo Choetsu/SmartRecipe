@@ -62,7 +62,7 @@ function RecetteDetails() {
         } catch (error) {
             console.error("Erreur lors de la vérification des favoris:", error);
         }
-    }, [userId, recipeId]);
+    }, [userId, recipeId, apiUrl]);
 
     const fetchComments = useCallback(async () => {
         try {
@@ -73,7 +73,7 @@ function RecetteDetails() {
         } catch (error) {
             console.error(error);
         }
-    }, [recipeId]);
+    }, [recipeId, apiUrl]);
 
     useEffect(() => {
         const isFavorite =
@@ -101,7 +101,7 @@ function RecetteDetails() {
         fetchRecipeData();
         fetchComments();
         setIsLoading(false);
-    }, [recipeId, userId, checkIfFavorite, fetchComments]);
+    }, [recipeId, userId, checkIfFavorite, fetchComments, apiUrl]);
 
     useEffect(() => {
         checkIfFavorite();

@@ -36,7 +36,7 @@ function Seasons() {
 
             fetchSeasons();
         }
-    }, [selectedSeason]);
+    }, [selectedSeason, apiUrl]);
 
     return (
         <div className="Seasons">

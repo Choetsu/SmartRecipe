@@ -16,5 +16,15 @@ module.exports = function RecipeController(RecipeService) {
                 }
             }
         },
+        findAll: async (req, res, next) => {
+            try {
+                const filters = req.query;
+                const recipes = await RecipeService.findAll(filters);
+                return res.status(200).json(recipes);
+            } catch (error) {
+                console.error(error);
+                next(error);
+            }
+        },
     };
 };
