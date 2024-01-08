@@ -42,24 +42,25 @@ function RecetteDetails() {
     const apiUrl = process.env.REACT_APP_API_URL;
 
     const checkIfFavorite = useCallback(async () => {
+        if (!userId) return;
+
         try {
-            if (userId === null) {
-                return;
-            }
             const favoriteResponse = await axios.get(
                 `${apiUrl}/users/favorite-recipes/${userId}`
             );
             const favoriteRecipes = favoriteResponse.data;
-
-            favoriteRecipes.forEach((favoriteRecipe) => {
-                if (favoriteRecipe.id === recipeId) {
-                    setIsFavorite(true);
-                    localStorage.setItem(`favorite_${recipeId}`, "true");
-                } else {
-                    setIsFavorite(false);
-                    localStorage.removeItem(`favorite_${recipeId}`);
-                }
+            const isCurrentFavorite = favoriteRecipes.some((element) => {
+                return (
+                    element.user_recipe &&
+                    element.user_recipe.recipe_id === parseInt(recipeId)
+                );
             });
+
+            setIsFavorite(isCurrentFavorite);
+            localStorage.setItem(
+                `favorite_${recipeId}`,
+                isCurrentFavorite.toString()
+            );
         } catch (error) {
             console.error("Erreur lors de la vérification des favoris:", error);
         }
@@ -77,9 +78,8 @@ function RecetteDetails() {
     }, [recipeId, apiUrl]);
 
     useEffect(() => {
-        const isFavorite =
-            localStorage.getItem(`favorite_${recipeId}`) === "true";
-        setIsFavorite(isFavorite);
+        const isFav = localStorage.getItem(`favorite_${recipeId}`) === "true";
+        setIsFavorite(isFav);
 
         const fetchRecipeData = async () => {
             try {
@@ -95,18 +95,13 @@ function RecetteDetails() {
             }
         };
 
+        fetchRecipeData();
+        fetchComments();
         if (userId) {
             checkIfFavorite();
         }
-
-        fetchRecipeData();
-        fetchComments();
         setIsLoading(false);
     }, [recipeId, userId, checkIfFavorite, fetchComments, apiUrl]);
-
-    useEffect(() => {
-        checkIfFavorite();
-    }, [checkIfFavorite]);
 
     const addToFavorites = async () => {
         try {
@@ -114,8 +109,6 @@ function RecetteDetails() {
                 recipeId: recipeId,
                 userId: userId,
             });
-            setIsFavorite(true);
-            localStorage.setItem(`favorite_${recipeId}`, "true");
         } catch (error) {
             console.error(error);
         }
@@ -130,26 +123,27 @@ function RecetteDetails() {
                     userId: userId,
                 },
             });
-            setIsFavorite(false);
-            localStorage.removeItem(`favorite_${recipeId}`);
         } catch (error) {
             console.error(error);
         }
     };
 
     const toggleFavorite = async () => {
-        if (userId !== null) {
-            try {
-                if (isFavorite) {
-                    await removeFromFavorites();
-                } else {
-                    await addToFavorites();
-                }
-            } catch (error) {
-                console.error(error);
+        if (!userId) return (window.location = "/login");
+
+        try {
+            if (isFavorite) {
+                await removeFromFavorites();
+            } else {
+                await addToFavorites();
             }
-        } else {
-            window.location = "/login";
+            setIsFavorite(!isFavorite);
+            localStorage.setItem(
+                `favorite_${recipeId}`,
+                (!isFavorite).toString()
+            );
+        } catch (error) {
+            console.error(error);
         }
     };
 
