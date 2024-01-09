@@ -212,7 +212,14 @@ function RecetteDetails() {
         setIsLoadingCaloricIndications(true);
         try {
             const response = await axios.post(`${apiUrl}/caloric-indications`, {
-                caloricIndicationsInput: recipe.name,
+                caloricIndicationsInput:
+                    recipe.name +
+                    " " +
+                    recipe.ingredient +
+                    " " +
+                    recipe.instruction +
+                    " " +
+                    recipe.description,
             });
             setCaloricIndications(response.data);
             setShowModalCaloricIndications(true);
