@@ -29,7 +29,13 @@ function Recherche() {
         }
     };
 
-    const recipes = fetchRecipes();
+    const recipe = fetchRecipes().then((data) => {
+        let recipes = "";
+        data.forEach((element) => {
+            recipes += "\n" + element.name + " : " + element.description;
+        });
+        return recipes;
+    });
 
     const handleSearch = async () => {
         setResponse([]);
@@ -47,10 +53,10 @@ function Recherche() {
         try {
             const searchResponse = await axios.post(`${apiUrl}/recipe-search`, {
                 recipeInput:
-                    "Voici les recettes stockées dans la base de données" +
-                    recipes +
+                    "Voici les recettes stockées que je possède en base de données : " +
+                    recipe +
                     "\n" +
-                    "voici la demande de l'utilisateur" +
+                    "Voici la demande de l'utilisateur : " +
                     destinationInput,
             });
 
