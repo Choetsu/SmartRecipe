@@ -264,6 +264,19 @@ function RecetteDetails() {
         window.open(mailtoLink, "_blank");
     };
 
+    const shareByTwitter = () => {
+        let twitterLink =
+            "https://twitter.com/intent/tweet?text=" +
+            encodeURIComponent(groceryList);
+        window.open(twitterLink, "_blank");
+    };
+
+    const shareByWhatsapp = () => {
+        let whatsappLink =
+            "https://wa.me/?text=" + encodeURIComponent(groceryList);
+        window.open(whatsappLink, "_blank");
+    };
+
     return (
         <>
             <div className="p-6 max-w-4xl mx-auto bg-white rounded-xl shadow-lg overflow-hidden mt-32">
@@ -437,6 +450,38 @@ function RecetteDetails() {
                                                 >
                                                     <ShareIcon className="h-5 w-5 mr-2" />
                                                     Partager
+                                                </button>
+                                                <button
+                                                    onClick={shareByTwitter}
+                                                    className="flex items-center bg-blue-400 text-white px-3 py-2 rounded hover:bg-blue-600"
+                                                >
+                                                    <svg
+                                                        className="h-5 w-5 mr-2"
+                                                        viewBox="0 0 24 24"
+                                                        fill="currentColor"
+                                                    >
+                                                        <path
+                                                            fillRule="evenodd"
+                                                            clipRule="evenodd"
+                                                            d="M22 4.00001C21.0424 4.67506 19.9827 5.19292 18.86 5.53001C18.2571 4.8375 17.4231 4.34688 16.5231 4.13001C15.6231 3.91313 14.6863 3.97719 13.8285 4.31301C12.9707 4.64883 12.2317 5.23906 11.6963 6.01301C11.1609 6.78696 10.851 7.71187 10.8 8.66001V9.00001C9.04237 9.05001 7.31424 8.5925 5.82849 7.69301C4.34274 6.79352 3.15989 5.48813 2.4 4.00001C2.4 4.00001 -0.599998 11 6.00001 15C4.26001 16.65 2.16001 17.5 0 17C6.00001 21 12 19 15 17C17.4 16 19.5 14.5 21 12C22 10 22.6 7.50001 22 4.00001Z"
+                                                        />
+                                                    </svg>
+                                                </button>
+                                                <button
+                                                    onClick={shareByWhatsapp}
+                                                    className="flex items-center bg-green-400 text-white px-3 py-2 rounded hover:bg-green-600"
+                                                >
+                                                    <svg
+                                                        className="h-5 w-5 mr-2"
+                                                        viewBox="0 0 24 24"
+                                                        fill="currentColor"
+                                                    >
+                                                        <path
+                                                            fillRule="evenodd"
+                                                            clipRule="evenodd"
+                                                            d="M12 2C6.5 2 2 6.5 2 12C2 17.5 6.5 22 12 22C17.5 22 22 17.5 22 12C22 6.5 17.5 2 12 2ZM12 20.5C7.7 20.5 4.5 17.3 4.5 13C4.5 10.8 5.5 8.8 6.9 7.4L6.3 5.8C6.2 5.6 6.3 5.3 6.5 5.2C6.7 5.1 7 5.2 7.1 5.4L8.1 7.1C8.3 7 8.6 7 8.8 6.9C9.1 6.8 9.3 6.9 9.4 7.1L10.1 8.1C10.3 8.3 10.3 8.6 10.2 8.8C10.1 9.1 10.2 9.3 10.4 9.4L12.1 10.4C12.3 10.6 12.3 10.9 12.2 11.1C12.1 11.4 12.2 11.6 12.4 11.7L13.4 12.4C13.6 12.6 13.6 12.9 13.5 13.1C13.4 13.4 13.5 13.6 13.7 13.7L15.4 14.7C15.6 14.9 15.6 15.2 15.5 15.4C15.4 15.7 15.5 15.9 15.7 16L17.3 16.6C17.5 16.7 17.7 16.9 17.6 17.2C17"
+                                                        />
+                                                    </svg>
                                                 </button>
                                             </div>
                                             <div className="items-center px-4 py-3">
