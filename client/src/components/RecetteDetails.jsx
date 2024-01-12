@@ -313,6 +313,11 @@ function RecetteDetails() {
         window.open(whatsappLink, "_blank");
     };
 
+    const formatDate = (dateString) => {
+        const options = { year: "numeric", month: "2-digit", day: "2-digit" };
+        return new Date(dateString).toLocaleDateString("fr-FR", options);
+    };
+
     return (
         <>
             <div className="p-6 max-w-4xl mx-auto bg-white rounded-xl shadow-lg overflow-hidden mt-32">
@@ -654,22 +659,20 @@ function RecetteDetails() {
                                 key={comment.id}
                                 className="bg-white p-4 rounded-lg shadow-sm mb-4 border border-gray-200"
                             >
-                                <p className="text-gray-800 mb-2">
-                                    {comment.comment}
-                                </p>
-                                <div className="text-yellow-500 font-semibold">
-                                    Note : {comment.rating}/5
-                                </div>
-
-                                <div className="flex items-center mt-4">
-                                    <div className="flex-shrink-0 mr-3">
-                                        <div className="text-sm text-gray-500">
-                                            {comment.user.name}
-
-                                            <span className="text-gray-400">
-                                                {" "}
-                                                - {comment.created_at}
-                                            </span>
+                                <div className="flex justify-between items-start">
+                                    <div className="w-3/4">
+                                        <p className="text-gray-800 mb-2 font-semibold">
+                                            {comment.comment}
+                                        </p>
+                                        <div className="text-yellow-500 font-semibold">
+                                            Note : {comment.rating}/5
+                                        </div>
+                                    </div>
+                                    <div className="text-right text-sm text-gray-500">
+                                        <div>{comment.user.lastname}</div>
+                                        <div>{comment.user.firstname}</div>
+                                        <div className="text-gray-400">
+                                            Le {formatDate(comment.createdAt)}
                                         </div>
                                     </div>
                                 </div>
