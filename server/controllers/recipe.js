@@ -18,27 +18,27 @@ module.exports = function RecipeController(RecipeService) {
         },
         findAll: async (req, res, next) => {
             try {
-                const { page = 1, limit = 10, ...filters } = req.query;
-                const offset = (page - 1) * limit;
-
-                const { rows: recipes, count: total } =
-                    await RecipeService.findAll(filters, {
-                        limit: limit,
-                        offset: offset,
-                    });
-
-                return res.status(200).json({ recipes, total });
+                const filters = req.query;
+                const recipes = await RecipeService.findAll(filters);
+                return res.status(200).json(recipes);
             } catch (error) {
                 console.error(error);
                 res.status(500).json(error);
                 next(error);
             }
         },
-        fetchAll: async (req, res, next) => {
+        findAndCountAll: async (req, res, next) => {
             try {
-                const filters = req.query;
-                const recipes = await RecipeService.fetchAll(filters);
-                return res.status(200).json(recipes);
+                const { page = 1, limit = 10, ...filters } = req.query;
+                const offset = (page - 1) * limit;
+
+                const { rows: recipes, count: total } =
+                    await RecipeService.findAndCountAll(filters, {
+                        limit: limit,
+                        offset: offset,
+                    });
+
+                return res.status(200).json({ recipes, total });
             } catch (error) {
                 console.error(error);
                 res.status(500).json(error);

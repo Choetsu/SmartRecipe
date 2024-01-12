@@ -16,13 +16,13 @@ module.exports = new genericRouter(
                 middleware: [],
             },
             {
-                handler: "findAll",
+                handler: "findAndCountAll",
                 method: "get",
                 path: "/",
                 middleware: [],
             },
             {
-                handler: "fetchAll",
+                handler: "findAll",
                 method: "get",
                 path: "/all",
                 middleware: [],
