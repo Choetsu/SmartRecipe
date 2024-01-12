@@ -21,12 +21,6 @@ module.exports = new genericRouter(
                 path: "/register",
                 middleware: [],
             },
-            // {
-            //     handler: "logout",
-            //     method: "post",
-            //     path: "/logout",
-            //     middleware: [],
-            // },
             {
                 handler: "addFavoriteRecipe",
                 method: "post",

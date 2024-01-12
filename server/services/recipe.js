@@ -6,8 +6,19 @@ const UniqueConstraintError = require("../errors/UniqueConstraintError");
 
 module.exports = function RecipeService() {
     return {
-        findAll: async function (filters) {
-            return Recipe.findAll({ where: filters });
+        findAll: async function (filters, options) {
+            let dbOptions = {
+                where: filters,
+            };
+            if (options.order) {
+                dbOptions.order = Object.entries(options.order);
+            }
+            if (options.limit) {
+                dbOptions.limit = options.limit;
+                dbOptions.offset = options.offset;
+            }
+
+            return Recipe.findAll(dbOptions);
         },
         findAndCountAll: async function (filters, options) {
             let dbOptions = {
