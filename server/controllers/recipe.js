@@ -22,8 +22,16 @@ module.exports = function RecipeController(RecipeService) {
                 const limit = parseInt(req.query.limit) || 9;
                 const offset = (page - 1) * limit;
 
-                const filters = { ...req.query, limit, offset };
-                const recipes = await RecipeService.findAll(filters);
+                const filters = req.query;
+                const order = req.query.order || "asc";
+
+                const options = {
+                    order: [["id", order]],
+                    limit,
+                    offset,
+                };
+
+                const recipes = await RecipeService.findAll(filters, options);
                 return res.status(200).json(recipes);
             } catch (error) {
                 console.error(error);

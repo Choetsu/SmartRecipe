@@ -61,12 +61,20 @@ function Recette() {
                 ) : (
                     <p className="text-center">Aucune recette trouvée</p>
                 )}
-                <div className="flex justify-center mt-8">
-                    <button onClick={() => paginate(1)}>1</button>
-                    <button onClick={() => paginate(2)}>2</button>
-                    <button onClick={() => paginate(3)}>3</button>
-                    <button onClick={() => paginate(4)}>4</button>
-                    <button onClick={() => paginate(5)}>5</button>
+                <div className="flex justify-center mt-8 space-x-2">
+                    {[1, 2, 3, 4, 5].map((page) => (
+                        <button
+                            key={page}
+                            onClick={() => paginate(page)}
+                            className={`px-4 py-2 border rounded-md ${
+                                currentPage === page
+                                    ? "bg-blue-500 text-white border-blue-500"
+                                    : "border-gray-300 text-gray-700 hover:bg-gray-200"
+                            }`}
+                        >
+                            {page}
+                        </button>
+                    ))}
                 </div>
             </div>
             <Chatbot />
