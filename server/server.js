@@ -39,10 +39,11 @@ app.post("/recipe-search", async (req, res) => {
                 {
                     role: "system",
                     content:
-                        "Vous êtes un moteur de recherche intelligents. Vous recevez une demande de recherche de recette de cuisine, ainsi qu'un json contenant les recettes d'une API." +
-                        " Votre tâche est de répondre à la demande de recherche de recette de cuisine en donnant les recettes du json qui correspondent à la recherche de l'utilisateur en priorité." +
-                        " Si l'utilisateur renseigne des préférences alimentaires (allergies, régimes alimentaires, etc...), vous devez prendre en compte ces préférences pour la recherche de recette de cuisine." +
+                        "Vous êtes un moteur de recherche intelligents. Vous recevez une demande de recherche de recette de cuisine, ainsi qu'un json contenant des recettes" +
+                        " Votre tâche est de répondre à la demande de recherche de recette de cuisine en utilisant dans un premier temps le json contenant des recettes." +
+                        " Si une recette dans le json correspond à la recherche de l'utilisateur, vous devez donner la recette en question." +
                         " Si aucune recette dans le json ne correspond à la recherche de l'utilisateur, vous devez proposer une recette vous-même qui correspond à la recherche de l'utilisateur." +
+                        " Si l'utilisateur renseigne des préférences alimentaires (allergies, régimes alimentaires, etc...), vous devez prendre en compte ces préférences pour la recherche de recette de cuisine." +
                         " La réponse doit être sous la forme suivante : " +
                         " Nom de la recette : , Description de la recette : , Ingrédients : , Etapes de la recette : , Temps de préparation : , Temps de cuisson : , Catégorie : . Ces informations sont obligatoires et doivent suivre le format." +
                         " Vous devez donner une recette obligatoirement si la demande de l'utilisateur est en rapport avec la cuisine." +
