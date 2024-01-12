@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import { StarIcon as StarIconFilled } from "@heroicons/react/24/solid";
 import { StarIcon as StarIconOutline } from "@heroicons/react/24/outline";
 import { ClipboardDocumentIcon, ShareIcon } from "@heroicons/react/24/solid";
-import { ArrowUturnLeftIcon } from "@heroicons/react/solid";
+import { ArrowUturnLeftIcon } from "@heroicons/react/24/solid";
 import Chatbot from "./Chatbot";
 import { useNavigate } from "react-router-dom";
 
@@ -287,28 +287,31 @@ function RecetteDetails() {
 
     return (
         <>
-            <button
-                onClick={goBack}
-                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full shadow-lg transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110"
-            >
-                <ArrowUturnLeftIcon className="h-6 w-6 text-white" />
-            </button>
-
             <div className="p-6 max-w-4xl mx-auto bg-white rounded-xl shadow-lg overflow-hidden mt-32">
                 {isLoading ? (
                     <p className="text-center text-gray-500">Chargement…</p>
                 ) : (
                     <>
-                        <h1 className="text-3xl font-bold text-gray-900 mb-4">
-                            Nom de la recette {recipe.name}
-                        </h1>
-                        <p className="text-gray-700 text-lg mb-2">
-                            {recipe.description}
-                        </p>
+                        <div className="flex justify-between items-center mb-10">
+                            <h1 className="text-3xl font-bold text-gray-900">
+                                {recipe.name}
+                            </h1>
+                            <button
+                                onClick={goBack}
+                                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full shadow-lg transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110"
+                            >
+                                <ArrowUturnLeftIcon className="h-6 w-6 text-white" />
+                            </button>
+                        </div>
+                        <div className="flex justify-center items-center mb-4">
+                            <p className="text-gray-700 text-lg mb-2">
+                                {recipe.description}
+                            </p>
+                        </div>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                             <div>
                                 <h3 className="text-xl font-semibold text-gray-800">
-                                    Instructions
+                                    Instructions :
                                 </h3>
                                 <p className="text-gray-600">
                                     {recipe.instruction}
@@ -316,7 +319,7 @@ function RecetteDetails() {
                             </div>
                             <div>
                                 <h3 className="text-xl font-semibold text-gray-800">
-                                    Ingrédients
+                                    Ingrédients :
                                 </h3>
                                 <p className="text-gray-600">
                                     {recipe.ingredient}
@@ -325,10 +328,10 @@ function RecetteDetails() {
                         </div>
                         <div className="flex justify-between items-center text-gray-700">
                             <p>
-                                Temps de préparation {recipe.preparation_time}
+                                Temps de préparation : {recipe.preparation_time}
                             </p>
-                            <p>Temps de cuisson {recipe.cooking_time}</p>
-                            <p>Catégorie {recipe.categorie}</p>
+                            <p>Temps de cuisson : {recipe.cooking_time}</p>
+                            <p>Catégorie : {recipe.categorie}</p>
                         </div>
                         <div className="flex justify-center items-center space-x-4 mt-4">
                             <button

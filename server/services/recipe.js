@@ -78,5 +78,8 @@ module.exports = function RecipeService() {
                 throw e;
             }
         },
+        fetchAll: async function (filters) {
+            return Recipe.findAll({ where: filters });
+        },
     };
 };

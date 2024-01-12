@@ -22,7 +22,7 @@ function Recherche() {
 
     const fetchRecipes = async () => {
         try {
-            const response = await axios.get(`${apiUrl}/recipes`);
+            const response = await axios.get(`${apiUrl}/recipes/all`);
             return response.data;
         } catch (error) {
             console.error(error);

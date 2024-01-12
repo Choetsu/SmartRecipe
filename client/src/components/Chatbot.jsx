@@ -7,7 +7,7 @@ function Chatbot() {
     const [responses, setResponses] = useState([
         {
             message:
-                "Bonjour, je suis George chef étoilé au guide Michelin ayant une quinzaine d'années d'expérience dans le métier avec plusieurs concours culinaires gagnés à l'internationnal. Je suis là pour répondre à tes questions sur la cuisine.",
+                "Bonjour, je suis George chef étoilé. Je suis là pour vous aider à trouver des recettes.",
             sender: "bot",
         },
     ]);

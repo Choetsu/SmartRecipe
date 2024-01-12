@@ -21,6 +21,12 @@ module.exports = new genericRouter(
                 path: "/",
                 middleware: [],
             },
+            {
+                handler: "fetchAll",
+                method: "get",
+                path: "/all",
+                middleware: [],
+            },
         ],
         defaultRoutes: {
             getOne: {

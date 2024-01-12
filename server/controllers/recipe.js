@@ -34,5 +34,16 @@ module.exports = function RecipeController(RecipeService) {
                 next(error);
             }
         },
+        fetchAll: async (req, res, next) => {
+            try {
+                const filters = req.query;
+                const recipes = await RecipeService.fetchAll(filters);
+                return res.status(200).json(recipes);
+            } catch (error) {
+                console.error(error);
+                res.status(500).json(error);
+                next(error);
+            }
+        },
     };
 };
