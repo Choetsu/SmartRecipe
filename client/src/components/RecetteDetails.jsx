@@ -190,6 +190,30 @@ function RecetteDetails() {
             window.location = "/login";
         }
     };
+
+    const renderStars = (rating) => {
+        const numericRating = parseInt(rating);
+        const stars = [];
+        for (let i = 1; i <= 5; i++) {
+            if (i <= numericRating) {
+                stars.push(
+                    <StarIconFilled
+                        key={i}
+                        className="h-6 w-6 text-yellow-500"
+                    />
+                );
+            } else {
+                stars.push(
+                    <StarIconOutline
+                        key={i}
+                        className="h-6 w-6 text-yellow-500"
+                    />
+                );
+            }
+        }
+        return stars;
+    };
+
     const fetchRecommendedRecipes = async () => {
         setIsLoadingRecommend(true);
         try {
@@ -664,13 +688,15 @@ function RecetteDetails() {
                                         <p className="text-gray-800 mb-2 font-semibold">
                                             {comment.comment}
                                         </p>
-                                        <div className="text-yellow-500 font-semibold">
-                                            Note : {comment.rating}/5
+                                        <div className="flex items-center">
+                                            {renderStars(comment.rating)}
                                         </div>
                                     </div>
                                     <div className="text-right text-sm text-gray-500">
-                                        <div>{comment.user.lastname}</div>
-                                        <div>{comment.user.firstname}</div>
+                                        <div>
+                                            {comment.user.lastname}{" "}
+                                            {comment.user.firstname}
+                                        </div>
                                         <div className="text-gray-400">
                                             Le {formatDate(comment.createdAt)}
                                         </div>

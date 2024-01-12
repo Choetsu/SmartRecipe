@@ -13,7 +13,7 @@ const app = express();
 
 app.use(
     cors({
-        origin: "*",
+        origin: process.env.REACT_APP_API_URL,
         methods: ["GET", "POST", "PUT", "DELETE"],
         allowedHeaders: ["Content-Type", "Authorization"],
     })
