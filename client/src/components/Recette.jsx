@@ -13,9 +13,10 @@ function Recette() {
     useEffect(() => {
         const fetchRecipes = async () => {
             try {
-                const response = await axios.get(
-                    `${apiUrl}/recipes?page=${currentPage}&limit=${recipesPerPage}`
-                );
+                const response = await axios.get(`${apiUrl}/recipes`, {
+                    page: currentPage,
+                    limit: recipesPerPage,
+                });
                 setRecipes(response.data);
             } catch (error) {
                 console.error(error);
