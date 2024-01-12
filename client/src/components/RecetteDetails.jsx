@@ -4,9 +4,13 @@ import { useParams } from "react-router-dom";
 import { StarIcon as StarIconFilled } from "@heroicons/react/24/solid";
 import { StarIcon as StarIconOutline } from "@heroicons/react/24/outline";
 import { ClipboardDocumentIcon, ShareIcon } from "@heroicons/react/24/solid";
+import { ArrowUturnLeftIcon } from "@heroicons/react/solid";
 import Chatbot from "./Chatbot";
+import { useNavigate } from "react-router-dom";
 
 function RecetteDetails() {
+    const navigate = useNavigate();
+
     const [recipe, setRecipe] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
@@ -40,6 +44,10 @@ function RecetteDetails() {
     const [showModalCaloricIndications, setShowModalCaloricIndications] =
         useState(false);
     const apiUrl = process.env.REACT_APP_API_URL;
+
+    const goBack = () => {
+        navigate(-1);
+    };
 
     const checkIfFavorite = useCallback(async () => {
         if (!userId) return;
@@ -279,6 +287,13 @@ function RecetteDetails() {
 
     return (
         <>
+            <button
+                onClick={goBack}
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full shadow-lg transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110"
+            >
+                <ArrowUturnLeftIcon className="h-6 w-6 text-white" />
+            </button>
+
             <div className="p-6 max-w-4xl mx-auto bg-white rounded-xl shadow-lg overflow-hidden mt-32">
                 {isLoading ? (
                     <p className="text-center text-gray-500">Chargement…</p>
