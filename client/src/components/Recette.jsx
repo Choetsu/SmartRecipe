@@ -5,13 +5,17 @@ import Chatbot from "./Chatbot";
 
 function Recette() {
     const [recipes, setRecipes] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [recipesPerPage] = useState(9);
     const [isLoading, setIsLoading] = useState(true);
     const apiUrl = process.env.REACT_APP_API_URL;
 
     useEffect(() => {
         const fetchRecipes = async () => {
             try {
-                const response = await axios.get(`${apiUrl}/recipes`);
+                const response = await axios.get(
+                    `${apiUrl}/recipes?page=${currentPage}&limit=${recipesPerPage}`
+                );
                 setRecipes(response.data);
             } catch (error) {
                 console.error(error);
@@ -20,7 +24,9 @@ function Recette() {
 
         fetchRecipes();
         setIsLoading(false);
-    }, [apiUrl]);
+    }, [apiUrl, currentPage, recipesPerPage]);
+
+    const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
     return (
         <>
@@ -55,6 +61,13 @@ function Recette() {
                 ) : (
                     <p className="text-center">Aucune recette trouvée</p>
                 )}
+                <div className="flex justify-center mt-8">
+                    <button onClick={() => paginate(1)}>1</button>
+                    <button onClick={() => paginate(2)}>2</button>
+                    <button onClick={() => paginate(3)}>3</button>
+                    <button onClick={() => paginate(4)}>4</button>
+                    <button onClick={() => paginate(5)}>5</button>
+                </div>
             </div>
             <Chatbot />
         </>
