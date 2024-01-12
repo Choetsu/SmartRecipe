@@ -39,9 +39,9 @@ app.post("/recipe-search", async (req, res) => {
                 {
                     role: "system",
                     content:
-                        "Vous recevez une demande de recherche de recette de cuisine, ainsi qu'un json contenant les recettes d'une API." +
-                        " Votre tâche est de répondre à la demande de recherche de recette de cuisine en donnant les recettes du json qui correspondent à la recherche de l'utilisateur." +
-                        " Si aucune recette dans le json ne correspond à la recherche de l'utilisateur, vous devez proposer une recette hors du json qui correspond à la recherche de l'utilisateur." +
+                        "Vous êtes un moteur de recherche intelligents. Vous recevez une demande de recherche de recette de cuisine, ainsi qu'un json contenant les recettes d'une API." +
+                        " Votre tâche est de répondre à la demande de recherche de recette de cuisine en donnant les recettes du json qui correspondent à la recherche de l'utilisateur en priorité." +
+                        " Si aucune recette dans le json ne correspond à la recherche de l'utilisateur, vous devez proposer une recette vous-même qui correspond à la recherche de l'utilisateur." +
                         " La réponse doit être sous la forme suivante : " +
                         " Nom de la recette : , Description de la recette : , Ingrédients : , Etapes de la recette : , Temps de préparation : , Temps de cuisson : , Catégorie : . Ces informations sont obligatoires et doivent suivre le format." +
                         " Vous devez donner une recette obligatoirement si la demande de l'utilisateur est en rapport avec la cuisine." +
@@ -132,8 +132,8 @@ app.post("/accompaniment", async (req, res) => {
                 {
                     role: "system",
                     content:
-                        "Tu es un moteur de suggestion de suggestions d'accompagnements pour les recettes de cuisine, tu dois afficher les suggestions d'accompagnements qui correspondent à la recherche de l'utilisateur." +
-                        " Ici, tu dois recommender des suggestions d'accompagnements intelligents pour la recette que l'utilisateur te donne comme du vin, des desserts ou des fromages." +
+                        "Tu es un moteur de suggestion d'accompagnements pour les recettes de cuisine, tu dois afficher les suggestions d'accompagnements qui correspondent à la recherche de l'utilisateur." +
+                        " Ici, tu dois recommender des suggestions d'accompagnements intelligentes pour la recette que l'utilisateur te donne comme du vin, des desserts ou des fromages." +
                         " Tu ne dois répondre que par le nom de l'accompagnement et une courte description de celui-ci." +
                         " Tu dois donner la réponse sous la forme suivante : " +
                         " Nom de l'accompagnement : , Description de l'accompagnement : . Ces informations sont obligatoires et doivent suivre le format." +
@@ -230,6 +230,7 @@ app.post("/caloric-indications", async (req, res) => {
                     content:
                         "Tu es un moteur de recherche concernant les indications caloriques pour les recettes de cuisine, tu dois afficher les indications caloriques qui correspondent à la recherche de l'utilisateur." +
                         " Ici, tu dois donner les indications caloriques pour la recette que l'utilisateur te donne." +
+                        " Tu partiras du principe que ce sont des indications caloriques pour une personne." +
                         " Tu devras donner un descriptif des indications caloriques pour la recette de l'utilisateur." +
                         " Tu dois donner le nombre de calories total pour la recette." +
                         " Tu dois donner la réponse sous la forme suivante : " +

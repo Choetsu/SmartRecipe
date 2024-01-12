@@ -90,7 +90,7 @@ function Recherche() {
                     currentSegment = "ingredients";
                 } else if (element.startsWith("Étapes de la recette")) {
                     recipeSteps = element
-                        .substring("Étapes de la recette".length)
+                        .substring("Etapes de la recette".length)
                         .trim();
                     currentSegment = "steps";
                 } else if (element.startsWith("Temps de préparation")) {
