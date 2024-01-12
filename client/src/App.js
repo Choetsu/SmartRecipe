@@ -10,6 +10,7 @@ import RecetteDetails from "./components/RecetteDetails";
 import Favoris from "./components/Favoris";
 import Seasons from "./components/Seasons";
 import Register from "./components/Register";
+import Preferences from "./components/Preferences";
 
 function App() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -61,6 +62,14 @@ function App() {
                                     Favoris
                                 </Link>
                             )}
+                            {isLoggedIn && (
+                                <Link
+                                    to="/preferences"
+                                    className="text-gray-800 hover:text-blue-600 transition duration-300"
+                                >
+                                    Préférences
+                                </Link>
+                            )}
                         </div>
 
                         <div className="flex items-center space-x-4">
@@ -109,6 +118,7 @@ function App() {
                             }
                         />
                         <Route path="/favoris" element={<Favoris />} />
+                        <Route path="/preferences" element={<Preferences />} />
                         <Route
                             path="/recettes-saisonnieres"
                             element={<Seasons />}

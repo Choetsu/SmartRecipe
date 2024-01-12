@@ -14,6 +14,9 @@ function Chatbot() {
     const [isChatboxOpen, setIsChatboxOpen] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
 
+    const preferences =
+        localStorage.getItem("preferences") || "Pas de préférences";
+
     const apiUrl = process.env.REACT_APP_API_URL;
 
     const toggleChatbox = () => {
@@ -25,7 +28,11 @@ function Chatbot() {
             setIsLoading(true);
             try {
                 const response = await axios.post(`${apiUrl}/chatbot`, {
-                    chatbotInput: input,
+                    chatbotInput:
+                        input +
+                        "\n" +
+                        "Voici les préférences de l'utilisateur a prendre en compte : " +
+                        preferences,
                 });
                 console.log(response.data);
                 setResponses([

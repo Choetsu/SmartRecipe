@@ -28,7 +28,7 @@ function Favoris() {
 
     return (
         <>
-            <div className="Favoris bg-white p-8 mt-16">
+            <div className="bg-white p-8 mt-16">
                 <div>
                     <h1 className="text-2xl font-semibold text-gray-800 mb-4 text-center">
                         Mes favoris

@@ -45,6 +45,9 @@ function RecetteDetails() {
         useState(false);
     const apiUrl = process.env.REACT_APP_API_URL;
 
+    const preferences =
+        localStorage.getItem("preferences") || "Pas de préférences";
+
     const goBack = () => {
         navigate(-1);
     };
@@ -178,7 +181,11 @@ function RecetteDetails() {
         setIsLoadingRecommend(true);
         try {
             const response = await axios.post(`${apiUrl}/recommendations`, {
-                recommendationsInput: recipe.name,
+                recommendationsInput:
+                    recipe.name +
+                    "\n" +
+                    "Voici les préférences de l'utilisateur a prendre en compte : " +
+                    preferences,
             });
             setRecommendedRecipes(response.data);
             setShowModal(true);
@@ -192,7 +199,11 @@ function RecetteDetails() {
         setIsLoadingAccompagnements(true);
         try {
             const response = await axios.post(`${apiUrl}/accompaniment`, {
-                accompanimentInput: recipe.name,
+                accompanimentInput:
+                    recipe.name +
+                    "\n" +
+                    "Voici les préférences de l'utilisateur a prendre en compte : " +
+                    preferences,
             });
             setRecommendedAccompagnements(response.data);
             setShowModalAccompagnements(true);
@@ -206,7 +217,11 @@ function RecetteDetails() {
         setIsLoadingGroceryList(true);
         try {
             const response = await axios.post(`${apiUrl}/grocery-list`, {
-                groceryListInput: recipe.name,
+                groceryListInput:
+                    recipe.name +
+                    "\n" +
+                    "Voici les préférences de l'utilisateur a prendre en compte : " +
+                    preferences,
             });
             setGroceryList(response.data);
             setShowModalGroceryList(true);
@@ -580,15 +595,18 @@ function RecetteDetails() {
                         </div>
                     </>
                 )}
-
-                <div className="mt-4">
-                    <h3 className="text-lg font-semibold">Laisser un avis :</h3>
-                    <div className="mt-2">
-                        <label className="block">Note :</label>
+                <div className="mt-8">
+                    <h3 className="text-2xl font-bold mb-4">
+                        Laisser un avis :
+                    </h3>
+                    <div className="mb-4">
+                        <label className="block text-lg font-medium mb-2">
+                            Note :
+                        </label>
                         <select
                             value={rating}
                             onChange={(e) => setRating(e.target.value)}
-                            className="border border-gray-300 rounded p-2"
+                            className="border border-gray-200 rounded-lg p-3 w-full focus:border-blue-500 focus:ring-blue-500"
                         >
                             {[0, 1, 2, 3, 4, 5].map((num) => (
                                 <option key={num} value={num}>
@@ -597,34 +615,36 @@ function RecetteDetails() {
                             ))}
                         </select>
                     </div>
-                    <div className="mt-2">
-                        <label className="block">Commentaire :</label>
+                    <div className="mb-6">
+                        <label className="block text-lg font-medium mb-2">
+                            Commentaire :
+                        </label>
                         <textarea
                             value={comment}
                             onChange={(e) => setComment(e.target.value)}
-                            className="border border-gray-300 rounded p-2 w-full"
+                            className="border border-gray-200 rounded-lg p-3 w-full h-32 resize-none focus:border-blue-500 focus:ring-blue-500"
                         />
                     </div>
                     <button
                         onClick={handleRatingSubmit}
-                        className="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300"
                     >
                         Soumettre
                     </button>
                 </div>
 
-                <div className="mt-4">
-                    <h3 className="text-lg font-semibold mb-3">Avis :</h3>
+                <div className="mt-8">
+                    <h3 className="text-2xl font-bold mb-4">Avis :</h3>
                     <ul className="list-none">
                         {commentList.map((comment) => (
                             <li
                                 key={comment.id}
-                                className="bg-gray-100 p-4 rounded-lg shadow mb-3"
+                                className="bg-white p-4 rounded-lg shadow-sm mb-4 border border-gray-200"
                             >
-                                <p className="text-gray-800">
+                                <p className="text-gray-800 mb-2">
                                     {comment.comment}
                                 </p>
-                                <div className="text-yellow-500 text-sm">
+                                <div className="text-yellow-500 font-semibold">
                                     Note : {comment.rating}/5
                                 </div>
                             </li>

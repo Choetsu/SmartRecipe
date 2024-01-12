@@ -10,6 +10,9 @@ function Recherche() {
     const [response, setResponse] = useState([]);
     const apiUrl = process.env.REACT_APP_API_URL;
 
+    const preferences =
+        localStorage.getItem("preferences") || "Pas de préférences";
+
     const [recipeData, setRecipeData] = useState({
         name: "",
         description: "",
@@ -57,7 +60,10 @@ function Recherche() {
                     recipe +
                     "\n" +
                     "Voici la demande de l'utilisateur : " +
-                    destinationInput,
+                    destinationInput +
+                    "\n" +
+                    "Voici les préférences de l'utilisateur : " +
+                    preferences,
             });
 
             const responseList = searchResponse.data.split("\n");

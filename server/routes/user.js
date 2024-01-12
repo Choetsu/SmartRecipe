@@ -40,7 +40,26 @@ module.exports = new genericRouter(
                 middleware: [],
             },
         ],
-        defaultRoutes: false,
+        defaultRoutes: {
+            getAll: {
+                method: "get",
+                path: "/",
+                middleware: [],
+                active: true,
+            },
+            getOne: {
+                method: "get",
+                path: "/:id",
+                middleware: [],
+                active: true,
+            },
+            delete: {
+                method: "delete",
+                path: "/:id",
+                middleware: [],
+                active: true,
+            },
+        },
         middlewares: [],
     }
 );

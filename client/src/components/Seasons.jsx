@@ -12,6 +12,9 @@ function Seasons() {
     const [isLoading, setIsLoading] = useState(false);
     const apiUrl = process.env.REACT_APP_API_URL;
 
+    const preferences =
+        localStorage.getItem("preferences") || "Pas de préférences";
+
     const seasons = [
         { name: "Printemps", image: springImage },
         { name: "Été", image: summerImage },
@@ -25,7 +28,11 @@ function Seasons() {
             const fetchSeasons = async () => {
                 try {
                     const response = await axios.post(`${apiUrl}/seasons`, {
-                        seasonsInput: selectedSeason,
+                        seasonsInput:
+                            selectedSeason +
+                            "\n" +
+                            "Voici les préférences de l'utilisateur a prendre en compte : " +
+                            preferences,
                     });
                     setRecommendations(response.data);
                 } catch (error) {
@@ -37,7 +44,7 @@ function Seasons() {
 
             fetchSeasons();
         }
-    }, [selectedSeason, apiUrl]);
+    }, [selectedSeason, apiUrl, preferences]);
 
     return (
         <>
