@@ -17,7 +17,7 @@ module.exports = function RecipeService() {
                 dbOptions.limit = options.limit;
                 dbOptions.offset = options.offset;
             }
-            return Recipe.findAll(dbOptions);
+            return Recipe.findAndCountAll(dbOptions);
         },
         findOne: async function (filters) {
             return Recipe.findOne({ where: filters });

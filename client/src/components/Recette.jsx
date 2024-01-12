@@ -7,6 +7,7 @@ function Recette() {
     const [recipes, setRecipes] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [recipesPerPage] = useState(9);
+    const [totalRecipes, setTotalRecipes] = useState(0);
     const [isLoading, setIsLoading] = useState(true);
     const apiUrl = process.env.REACT_APP_API_URL;
 
@@ -16,7 +17,8 @@ function Recette() {
                 const response = await axios.get(
                     `${apiUrl}/recipes?page=${currentPage}&limit=${recipesPerPage}`
                 );
-                setRecipes(response.data);
+                setRecipes(response.data.recipes);
+                setTotalRecipes(response.data.total);
             } catch (error) {
                 console.error(error);
             }
@@ -27,6 +29,10 @@ function Recette() {
     }, [apiUrl, currentPage, recipesPerPage]);
 
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
+    const pageNumbers = [];
+    for (let i = 1; i <= Math.ceil(totalRecipes / recipesPerPage); i++) {
+        pageNumbers.push(i);
+    }
 
     return (
         <>
@@ -62,7 +68,7 @@ function Recette() {
                     <p className="text-center">Aucune recette trouvée</p>
                 )}
                 <div className="flex justify-center mt-8 space-x-2">
-                    {[1, 2, 3, 4, 5].map((page) => (
+                    {pageNumbers.map((page) => (
                         <button
                             key={page}
                             onClick={() => paginate(page)}
