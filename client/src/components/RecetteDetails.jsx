@@ -82,6 +82,19 @@ function RecetteDetails() {
             const commentsResponse = await axios.get(
                 `${apiUrl}/recipe-ratings/comments/${recipeId}`
             );
+            const usersInfo = await Promise.all(
+                commentsResponse.data.map(async (comment) => {
+                    const userResponse = await axios.get(
+                        `${apiUrl}/users/${comment.user_id}`
+                    );
+                    return userResponse.data;
+                })
+            );
+
+            commentsResponse.data.forEach((comment, index) => {
+                comment.user = usersInfo[index];
+            });
+
             setCommentList(commentsResponse.data);
         } catch (error) {
             console.error(error);
@@ -646,6 +659,19 @@ function RecetteDetails() {
                                 </p>
                                 <div className="text-yellow-500 font-semibold">
                                     Note : {comment.rating}/5
+                                </div>
+
+                                <div className="flex items-center mt-4">
+                                    <div className="flex-shrink-0 mr-3">
+                                        <div className="text-sm text-gray-500">
+                                            {comment.user.name}
+
+                                            <span className="text-gray-400">
+                                                {" "}
+                                                - {comment.created_at}
+                                            </span>
+                                        </div>
+                                    </div>
                                 </div>
                             </li>
                         ))}
